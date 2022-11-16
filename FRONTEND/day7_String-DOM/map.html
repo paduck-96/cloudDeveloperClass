@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>map</title>
+  </head>
+  <body>
+    <script>
+      var map = new Map();
+      //동일한 key에 여러번 데이터 저장하면 마지막 데이터로 저장
+      map.set("name", "adam");
+      console.log(map);
+      map.set("name", "아담");
+      console.log(map);
+      //데이터 가져오기 get
+      console.log(map.get("name"));
+      console.log(map.get(name));
+      //전체 데이터 순회
+      for (key of map.keys()) {
+        console.log(key);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>array method</title>
+  </head>
+  <body>
+    <script>
+      //배열 메서드 학습
+      //사용법보다 이해하는 것이 매우 중요
+      var ar1 = ["HTML", "CSS", "JavaScript", "react"];
+      var ar2 = ["MariaDB", "Java", "Spring"];
+      var sort1 = [20, 40, 230, 110];
+
+      //map reduce programming에서는 데이터를 처리 후 결과를 합침
+      var subjects = ar1.concat(ar2);
+      console.log(subjects);
+
+      //for in 과 다르게 순차적으로 '데이터'에 접근
+      for (subject of subjects) {
+        console.log(subject);
+      }
+
+      //처음에 데이터를 추가하고, 처음 삽입한 데이터 제거
+      //Queue(FIFO - 스케쥴링에 이용)
+      subjects.unshift("node"); //shift와 unshift 활용
+      console.log(subjects);
+      console.log(subjects.shift());
+
+      //마지막에 데이터를 추가하고 마지막에 삽입한 데이터를 제거
+      //Stack(LIFO - 복귀주소 저장)
+      subjects.push("Linux");
+      console.log(subjects);
+
+      //정렬
+      //숫자 배열을 문자 배열로 판단하고 정렬하는 형태
+      //코드를 가지고 정렬하니 자릿수가 다르면 오류 발생
+      console.log(ar1.sort());
+      //매개변수가 2개이고 리턴은 정수를 하는 함수를 대입할 수 있는데
+      //매개변수 2개는 배열의 데이터가 순차적으로 들어온다
+      //리턴은 양수는 앞이 크고, 0은 같고, 음수는 뒤가 크다
+      console.log(
+        sort1.sort((front, back) => {
+          //비교해서 결과가 양수, 0, 음수? 빼면 되잖아?
+          //양수가 나와야 자리가 바뀌기 때문에
+          //a-b를 하면 결국 작은게 앞에 오게된다
+          return front - back;
+        })
+      );
+
+      //문자열 배열의 내림차순
+      //오름차순 정렬한 후 reverse는 1차적인 방법
+      console.log(
+        ar1.sort((a, b) => {
+          //js에서는 문자열 크기 비교가 가능한데
+          //sort는 정수를 리턴 받아야 하기 때문에 불가
+          if (a < b) return 1;
+          else return 0;
+        })
+      );
+
+      //차후 class로도 만들어보기
+      //인스턴스를 만들 수 있는 생성자
+      function Book(name, price, date) {
+        this.name = name;
+        this.price = price;
+        this.date = date;
+        //출력 신경
+        //toString()은 object 메서드
+        //overriding(재정의)
+        this.toString = function () {
+          return `이름은 ${this.name}, 가격은 ${this.price}, 날짜는${this.date}`;
+        };
+      }
+      class BookClass {
+        constructor() {
+          return console.log(`책이 추가되었습니다`);
+        }
+        setBook(name, price) {
+          this.name = name;
+          this.price = price;
+        }
+        getBooks() {
+          for (book of this) {
+            console.log(book.name);
+          }
+        }
+      }
+
+      var bookClass = [new BookClass(), new BookClass(), new BookClass()];
+      bookClass[0].setBook("삐리뽀", 5000);
+      bookClass[1].setBook("압둘", 15000);
+      bookClass[2].setBook("이거거", 22000);
+      bookClass.getBooks();
+
+      var books = [
+        new Book("A Python", 30000, new Date(2022, 10, 10)),
+        new Book("Breaking Java", 25000, new Date(2022, 9, 9)),
+        new Book("Continue C", 50000, new Date(2022, 7, 11)),
+        new Book("JavaScript", 17000, new Date(2021, 6, 12)),
+      ];
+      console.log(books);
+      //1이면 name 오름차순, 2면 name의 내림차순
+      //3이면 price의 오름차순, 4이면 price의 내림차순
+      //5이면 date의 오름차순, 6이면 date의 내림차순
+      let menu = prompt("정렬 방법 선택: 1~6");
+      let result;
+      switch (menu) {
+        case "1":
+          result = books.sort((a, b) => {
+            if (a.name > b.name) return 1;
+            else return -1;
+          });
+          break;
+        case "2":
+          result = books.sort((a, b) => {
+            if (a.name < b.name) return 1;
+            else return -1;
+          });
+          break;
+        case "3":
+          result = books.sort((a, b) => {
+            return a.price - b.price;
+          });
+          break;
+        case "4":
+          result = books.sort((a, b) => {
+            return b.price - a.price;
+          });
+          break;
+        case "5":
+          result = books.sort((a, b) => {
+            return a.date.getTime() - b.date.getTime();
+          });
+          break;
+        case "6":
+          result = books.sort((a, b) => {
+            return b.date.getTime() - a.date.getTime();
+          });
+          break;
+        default:
+          result = books;
+      }
+      console.log(result);
+    </script>
+  </body>
+</html>

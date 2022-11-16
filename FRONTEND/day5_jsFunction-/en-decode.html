@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>en-decode</title>
+  </head>
+  <body>
+    <script>
+      //? 뒤에 부분을 query string || parameter라고 함
+      //서버에게 요청할 때 영문과 숫자를 제외한
+      //나머지 데이터가 있다면 인코딩
+      var url = "https://www.kakao.com/taxi?name=블랙";
+
+      //encodeing
+      //최근에는 서버 렌더링을 잘 사용하지 않아 더욱 중요
+
+      var param = encodeURI(url);
+      console.log(param);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>form change</title>
+  </head>
+  <body>
+    name <input type="text" /><br />
+    age <input type="number" /><br />
+    birth <input type="date" /><br />
+    <progress id="progress" value="0" max="100"></progress>
+    <input type="button" value="시작" id="btn" />
+    <script>
+      let progress = document.getElementById("progress");
+      let btn = document.getElementById("btn");
+
+      btn.addEventListener("click", (e) => {
+        let timer = setInterval(() => {
+          progress.value += 10;
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>

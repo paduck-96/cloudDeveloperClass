@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dom style</title>
+    <!-- <script>
+      document.getElementById("header").style.color = "red";
+    </script> 
+위에서 아래로 내려 읽어가기 때문에 header가 없어 null 오류 반환
+null. 작업을 진행했기 때문에 불가능-->
+  </head>
+  <body>
+    <h1 id="header">헤더다 이 짜식아~</h1>
+    <p id="content">안녕하세요</p>
+    <input type="text" id="alias" value="값이다임마" />
+    <!-- form 안에 버튼이 있어야 submit 가능 -->
+    <button onclick="alert('인라인')">버튼</button>
+    <input type="button" value="버튼" id="btn" />
+    <script>
+      const header = document.getElementById("header");
+      const content = document.getElementById("content");
+      const input = document.getElementById("alias");
+      const button = document.getElementById("btn");
+
+      header.style.color = "red";
+      header.style.backgroundColor = "yello";
+      header.style.border = "2px solid white";
+
+      content.innerHTML += "텍스트 추가";
+      alert(input.value);
+
+      /*
+      button.onclick = function(){
+        alert("고전적 이벤트 처리 모델")
+      }
+      */
+      button.addEventListener("click", () => {
+        alert("표준 이벤트 모델");
+      });
+    </script>
+  </body>
+</html>

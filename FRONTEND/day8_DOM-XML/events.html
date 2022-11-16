@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>events</title>
+    <script>
+      //스크립트에서 body에 작성한 것들을 사용하는 경우
+      //body 아래로 옮기거나
+      //window의 load 이벤트 후 작성
+      //window의 load 이벤트는
+      //파일을 전부 읽어서 태그를 전부 메모리에 적재한 후 발생
+      window.addEventListener("load", (e) => {
+        document.getElementById("display").innerHTML = "load 이벤트 처리";
+      });
+      window.addEventListener("scroll", (e) => {
+        //스크롤하는 위치와 문서의 높이가 같을 떄
+        //가장 아래에서 스크롤을 할 때를 고려
+
+        //스크롤 하는 가장 상단의 위치 가져오기
+        var supportPageOffset = window.pageXOffset !== undefined;
+        var isCSS1Compat = (document.compatMode || "") === "CSS1Compat";
+        var scrollTop = supportPageOffset
+          ? window.pageYOffset
+          : isCSS1Compat
+          ? document.documentElement.scrollTop
+          : document.body.scrollTop;
+
+        //스크롤하는 높이
+        var scrollHeight = scrollTop + window.innerHeight;
+        //문서의 높이
+        var documentHeight = document.body.clientHeight;
+
+        //스크롤 하는 위치가 문서의 높이보다 크거나 같다면
+        if (scrollHeight >= documentHeight) {
+          for (let i = 0; i < 30; i++) {
+            document.getElementById("body").innerHTML += "<h1>무한 스크롤</h1>";
+          }
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div id="display"></div>
+    <div id="body"></div>
+  </body>
+</html>

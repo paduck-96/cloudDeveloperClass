@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>사용자 정의 객체</title>
+  </head>
+  <body>
+    <script>
+      let obj = {
+        name: "pee",
+        age: 27,
+        sex: "male",
+        disp: function () {
+          return this.name + ":" + this.sex + ":" + this.age;
+        },
+      };
+      console.log(obj.name);
+      console.log(obj["name"]);
+      console.log(obj.disp());
+      for (attr in obj) {
+        console.log(obj[attr]); //obj의 모든 속성을 순차적으로 문자열 형태로 attr에 대입
+      }
+      console.log("name" in obj);
+      console.log("age" in obj);
+
+      with (obj) {
+        //블럭 안에서는 obj이름 명시 불필요
+        //파일 내에서 window 생략해도 window 객체 요소 불러오는 것
+        console.log(sex);
+      }
+      obj.location = "seoul";
+      obj.name = "godlike";
+      delete obj.sex;
+      console.log(obj);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>재귀</title>
+  </head>
+  <body>
+    <h1>하노이의 탑 / 피보나치 해보기</h1>
+    <script>
+      //1부터 n까지의 합
+      const sum = (n) => {
+        if (n == 1) return 1;
+        return n + sum(n - 1);
+      };
+
+      //하노이의 탑
+      //피보나치 수열 - 재귀
+      const fibo_recursive = (n) => {
+        if (n == 2 || n == 1) return 1;
+        return fibo_recursive(n - 1) + fibo_recursive(n - 2);
+      };
+      document.write(fibo_recursive(11));
+      //피보나치 수열 - not재귀
+      const fibo_nonRecursive = (n) => {
+        var n1 = 1;
+        var n2 = 1;
+        var sum = 1;
+        var i = 3;
+        while (i <= n) {
+          sum = n1 + n2;
+          n2 = n1;
+          n1 = sum;
+          i++;
+        }
+        return sum;
+      };
+      document.write(fibo_nonRecursive(11));
+    </script>
+  </body>
+</html>

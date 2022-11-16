@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>반복문</title>
+  </head>
+  <body>
+    <script>
+      for (var i = 0; i < 4; i++) {
+        console.log(`image${10 * i + 1}.png`);
+      }
+
+      //for와 유사하게 작성 가능
+      var i = 0;
+      while (i < 4) {
+        console.log(`image${15 * i + 1}.png`);
+        i++;
+      }
+
+      //반드시 한 번은 수행
+      i = 0;
+      do {
+        console.log(`image${15 * i + 1}.png`);
+        i++;
+      } while (i < 4);
+
+      var obj = { name: "adam", age: 26 };
+      var ar = [100, 300, 200];
+
+      for (var attr in obj) {
+        //obj
+        console.log(attr); //key
+        console.log(obj[attr]); //value
+      }
+      for (var attr in ar) {
+        //arr
+        console.log(attr); //key
+        console.log(ar[attr]); //value
+      }
+    </script>
+  </body>
+</html>

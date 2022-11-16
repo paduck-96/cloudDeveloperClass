@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ajax-json parse</title>
+    <script>
+      window.addEventListener("load", (e) => {
+        let btn = document.getElementById("btn");
+        let display = document.getElementById("display");
+
+        btn.addEventListener("click", (e) => {
+          //ajax 요청 객세 재생성(복습)
+          let request = new XMLHttpRequest();
+          //요청 주기
+          request.open("GET", "./resource/data.json");
+          request.send("");
+          //응답 받기
+          request.addEventListener("load", () => {
+            //display.innerHtml = request.responseText;
+
+            let result = JSON.parse(request.responseText);
+            display.innerHTML = `${result.count}`;
+            let ar = result.documents;
+            ar.forEach((doc) => {
+              display.innerHTML += "<p>" + doc.name + ":" + doc.age + "</p>";
+            });
+          });
+          request.addEventListener("error", (e) => {
+            display.innerHTML = e.message;
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <button id="btn">json 데이터 가져오기</button>
+    <h6 id="display"></h6>
+  </body>
+</html>

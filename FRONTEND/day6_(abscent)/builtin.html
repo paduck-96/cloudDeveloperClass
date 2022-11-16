@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var str = "CGCCGDKSKDGCCGCCGDKDGCCGDS";
+      var index = "";
+      for (var i = 0; i < str.length; i++) {
+        if (
+          str.charAt(i) === "G" &&
+          str.charAt(i + 1) === "C" &&
+          str.charAt(i + 2) === "C" &&
+          str.charAt(i + 3) === "G"
+        ) {
+          index += i + " ";
+          i += 4;
+        }
+      }
+      console.log(index);
+    </script>
+    <pre>
+    =>연습문제
+    var str = "CGCCGDKSKDGCCGCCGDKDGCCGDS";
+    //이 문자열에서 GCCG를 찾아서 첫글자의 위치를 전부 출력하시오
+    //앞에서 사용한 데이터는 다시 사용하면 안됩니다.
+    
+    [1, 10,  20]
+</pre
+    >
+  </body>
+</html>

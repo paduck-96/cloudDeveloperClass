@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>기타 제어문</title>
+  </head>
+  <body>
+    <script>
+      for (var i = 0; i < 10; i++) {
+        document.write(i);
+        if (i % 3 == 0) break; //break에는 조건이 필요
+      }
+      document.write("<hr/>");
+      for (var i = 0; i < 10; i++) {
+        document.write(i);
+        if (i % 3 == 0) continue; //continue에는 조건이 필요
+        //종료가 아닌 강제 진행
+      }
+      document.write("<hr/>");
+      for (var i = 0; i < 5; i++) {
+        for (var j = 0; j < 5; j++) {
+          document.write("*");
+        }
+        document.write("<br/>");
+      } //5개 동일
+      document.write("<hr/>");
+      for (var i = 0; i < 5; i++) {
+        //줄번호를 i, 늘어나는 데이터를 j로 봤을 때
+        //시작하는 부분은 동일하고 끝나는 부분이 다름
+        //증감치를 찾고 이전 반복 변수에 곱한 후 더하기/뺴기를 통해 갑 맞추기
+        for (var j = 0; j < i + 1; j++) {
+          document.write("*");
+        }
+        document.write("<br/>");
+      } //1개씩 증가
+      document.write("<hr/>");
+      for (var i = 0; i < 5; i++) {
+        for (var j = 0; j < 5 - i; j++) {
+          document.write("*");
+        }
+        document.write("<br/>");
+      } //음수도 동일
+      //-1씩 늘어나는 것
+      document.write("<hr/>");
+      for (var i = 0; i < 5; i++) {
+        if (i < 3) {
+          for (var j = 0; j < i + 1; j++) {
+            document.write("*");
+          }
+        } else {
+          for (var j = 0; j < 5 - i; j++) {
+            document.write("*");
+          }
+        }
+        document.write("<br/>");
+      } //증가 후 감소라면 패턴이 2개라는 것
+      document.write("<hr/>");
+      var num = 0;
+      for (var i = 0; i < 6; i++) {
+        if (i === 5) var check = 0;
+        while (check < 11) {
+          num %= 10;
+          document.write(num);
+          num++;
+          check++;
+        }
+        if (i === 5) break;
+        for (var j = 0; j < 5 - i; j++) {
+          document.write("_");
+        }
+        document.write(num);
+        num++;
+        if (i === 0) {
+          document.write("<br/>");
+          continue;
+        }
+        for (var k = 0; k < 2 * i - 1; k++) {
+          document.write("*");
+        }
+        document.write(num);
+        num++;
+        document.write("<br/>");
+      }
+    </script>
+  </body>
+</html>

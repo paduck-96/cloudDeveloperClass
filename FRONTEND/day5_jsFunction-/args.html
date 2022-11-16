@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>arguments</title>
+  </head>
+  <body>
+    <script>
+      function f1(n, msg) {
+        //매개변수로 대입된 데이터를
+        //arguments에도 저장, 이게 순차적으로 저장된게 arguments 배열
+        //화살표 함수에서는 사용 불가
+        for (var i = 0; i < n; i++) {
+          console.log(arguments);
+        }
+      }
+      f1(3, "beppbepp");
+
+      function f2(n, msg) {
+        console.log(n);
+        console.log(msg);
+        console.log(arguments[2]);
+      }
+      f2(10); //매개변수 갯수 부족하면 나머지 undefined
+      f2(10, "js", "123"); //더 많이 대입하면 순서대로
+
+      //callback
+      //함수를 대입 받아서 상태 변화가 생길 때 호출되도록 하는 것
+      setInterval(() => {
+        console.log("ms 주기마다 반복");
+      }, 5000);
+
+      //default 매개변수
+      const f3 = function (n = 1) {
+        // //과거의 default값 선언 방식
+        // const radius = n || 1;
+        // return Math.PI * radius * radius;
+        return Math.PI * n * n;
+      };
+      console.log(f3(10));
+      console.log(f3());
+    </script>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>session storage</title>
+  </head>
+  <body>
+    key <input type="text" id="keyinput" /> value
+    <input type="text" id="valueinput" />
+    <button id="insertbtn">삽입</button>
+    <button id="removebtn">삭제</button>
+    <input type="button" value="윈도우 추가" id="addwindowbtn" />
+
+    <fieldset>
+      <legend>데이터 출력 영역</legend>
+      <select size="10" id="list"></select>
+    </fieldset>
+    <script>
+      const key = document.getElementById("keyinput");
+      const value = document.getElementById("valueinput");
+      const insert = document.getElementById("insertbtn");
+      const remove = document.getElementById("removebtn");
+      const addwindow = document.getElementById("addwindowbtn");
+      let list = document.getElementById("list");
+
+      const showData = () => {
+        list.innerHTML = "";
+        for (let i = 0; i < sessionStorage.length; i++) {
+          let temp = sessionStorage.key(i);
+          list.options[list.options.length] = new Option(
+            temp + ":" + sessionStorage[temp],
+            temp
+          );
+        }
+      };
+
+      insert.addEventListener("click", (e) => {
+        e.preventDefault();
+        sessionStorage[key.value] = value.value;
+        showData();
+      });
+      remove.addEventListener("click", (e) => {
+        e.preventDefault();
+        sessionStorage.removeItem(key.value);
+        showData();
+      });
+      addwindow.addEventListener("click", () => {
+        window.open(location.href);
+      });
+      list.addEventListener("click", () => {
+        //선택된 index 전달하는 내장 메서드
+        //해당 태그 자체를 전달하는 내장 메서드
+        //태그의 value 전달하는 것
+        let selecteddata = list.options[list.selectedIndex];
+        key.value = selecteddata.value;
+        value.value = sessionStorage[selecteddata.value];
+      });
+      window.addEventListener("load", () => {
+        showData();
+      });
+    </script>
+  </body>
+</html>

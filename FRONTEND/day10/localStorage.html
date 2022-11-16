@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Local storage</title>
+  </head>
+  <body>
+    <form action="#" method="post" id="loginform">
+      ID : <input type="text" id="_id" /><br />
+      PASSWORD : <input type="password" id="pw" /><br />
+      <input type="checkbox" id="idsave" />save ID<br />
+      <input type="submit" value="login" />
+    </form>
+    <script>
+      const loginform = document.querySelector("#loginform");
+      const _id = document.querySelector("#_id");
+      const pw = document.getElementById("pw");
+      const idsave = document.getElementById("idsave");
+
+      loginform.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (idsave.checked) {
+          localStorage.setItem("_id", _id.value);
+        } else {
+          localStorage.removeItem("_id");
+        }
+      });
+      window.addEventListener("load", () => {
+        if (typeof localStorage._id !== "undefined") {
+          _id.value = localStorage._id;
+          idsave.checked = true;
+        }
+      });
+    </script>
+  </body>
+</html>

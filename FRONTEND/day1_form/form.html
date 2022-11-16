@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="servreurl" method="post">
+      <div>
+        <label for="name">이름</label>
+        <input type="text" value="itMan" id="name" />
+      </div>
+      <div>
+        <label for="password">비밀번호</label>
+        <input type="password" value="itMan" id="password" />
+      </div>
+      <fildset>
+        <legend>성별</legend>
+        <input
+          type="radio"
+          name="gender"
+          value="man"
+          checked="checked"
+        />남자<input type="radio" name="gender" value="woman" />여자
+      </fildset>
+      <div>
+        <label for="file">파일 업로드</label>
+        <input type="file" name="file" />
+      </div>
+      <div>
+        <input type="button" value="기능 정의 필요" />
+        <input type="submit" value="서버에 데이터 전송" />
+        <input type="reset" value="form 데이터 초기화" />
+        <input
+          type="hidden"
+          value="hide"
+          name="비가시적이지만 서버로 데이터 넘길 수 있음"
+          name="서버, 클라이언트 app을 하나로 만들어서 템플릿 엔진을 이용해 출력할 때 사용(ex page)"
+        />
+      </div>
+      <textarea value="처음엔 사용 불가" cols="30" rows="10">
+초기값은 여기에</textarea
+      >
+      <div>
+        <select name="selectName">
+          <option value="optionValue">옵션에는 value 작성</option>
+          <option value="optionValue">옵션에는 value 작성</option>
+          <option value="optionValue">옵션에는 value 작성</option>
+        </select>
+      </div>
+      <button>자동으로 submit 기능 수행</button>
+    </form>
+  </body>
+</html>

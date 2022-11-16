@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>String 학습</title>
+  </head>
+  <body>
+    <script>
+      var company = "adamsoft";
+
+      console.log("문자열 길이" + company.length);
+      console.log("0번째 문자" + company.charAt(0));
+      console.log("0번째 문자 코드" + company.charCodeAt(0));
+
+      console.log(company.toUpperCase()); //대소문자 변경
+      console.log("좌우 공백 제거:" + "       hh   ".trim());
+      //그런데 trim을 반복으로 아주 쉽게
+      var result = "";
+      for (var i = 0; i < "      hh    ".length; i++) {
+        if ("      hh    ".charAt(i) !== " ") {
+          result = result += "      hh    ".charAt(i);
+        }
+      }
+      //객체, 배열 기준으로 기준점을 찾아서 움직이기 때문에
+      ///length라는 간단한 메서드를 적용할 때
+      //해당 문자열 기준으로 길이만큼 확인해야 하기 때문에 불필요한 작업 증가
+      //var len = 문자열.length;
+      //len를 통해 바로 찾을 수 있음
+      console.log("좌우 공백 제거 노트림:" + result);
+
+      //찾아주는 indexOf 메서드
+      console.log(company.indexOf("a")); //앞에서부터 첫번째
+      console.log(company.lastIndexOf("a")); //뒤에서부터
+      //못 찾으면 음수 반환
+
+      var uri = "abc/def";
+      //문자열 분할
+      //패턴을 가지고 분할해서 배열로 생성 - split
+      var ar = uri.split("/");
+      console.log(ar);
+
+      //위치를 가지고 분할해서 문자열로 생성 - substring
+      //매개변수가 하나면 그 이후를 전부 자르기
+      //2개라면 앞은 시작 위치, 뒤는 끝나는 위치 | 갯수
+      var ss = uri.substring(1);
+      console.log(ss);
+      console.log(uri.substring(1, 5));
+
+      //replace
+      //패턴에 일치하는 일부 또는 모든 부분이
+      //교체된 새로운 문자열로 반환
+      //첫번째로 일치되는 문자열만 교체
+      //원래 문자열은 변경되지 않음
+      var info = "1234561234567";
+      var nonReplace = info.substring(0, 7);
+      var replace = info.substring(7);
+      console.log(info.replace(replace, "******"));
+
+      //문자열 템플릿
+      var data = 42;
+      console.log("이 데이터는" + data);
+      console.log(`이 데이터는 ${data}`);
+      //   console.log("중간에 줄바꿈
+      //   불가능");
+      console.log(`중간에 줄바꿈
+      가능`);
+    </script>
+  </body>
+</html>

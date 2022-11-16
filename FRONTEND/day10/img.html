@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>이미지 미리보기</title>
+  </head>
+  <body>
+    <!-- 파일 선택 객체
+    확장자 제한 가능 -->
+    <input type="file" accept=".png,.jpg,.jpeg,.gif" />
+    <input type="file" accept="image/*" id="imginput" />
+    <!-- 이미지 미리보기 영역 -->
+    <img width="250" height="250" id="display" />
+
+    <script>
+      //미리보기 중요
+      let imginput = document.getElementById("imginput");
+      let display = document.getElementById("display");
+
+      imginput.addEventListener("change", (e) => {
+        //선택한 파일 내용 읽기
+        //비동기로 수행됨
+        let reader = new FileReader();
+        //파일 선택 여부 확인
+        //javascript는 0이 아닌 숫자, null, undefined가 아니면
+        //truthy
+        if (!(imginput.files && imginput.files[0])) {
+          alert("선택된 파일이 없음");
+          display.src = "";
+          return;
+        }
+        reader.readAsDataURL(imginput.files[0]);
+        //파일 내용 전부 읽으면
+        reader.addEventListener("load", () => {
+          display.src = reader.result;
+        });
+      });
+    </script>
+  </body>
+</html>

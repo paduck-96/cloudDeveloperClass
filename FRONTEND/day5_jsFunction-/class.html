@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>class</title>
+  </head>
+  <body>
+    <script>
+      class Member {
+        //클래스 내 메서드는 function 키워드 생략
+        getName() {
+          return this.name;
+        }
+        //메서드 안에서 this.속성이름을 통해 객체 속성 만듦
+        setName(name) {
+          this.name = name;
+        }
+      }
+      //클래스의 인스턴스 만들기
+      let member = new Member();
+      member.setName("아담");
+      //인스턴스를 이용한 메서드 호출
+      console.log(member);
+      console.log(member.getName());
+
+      //member 클래스에 속성 추가
+      Member.prototype.getJob = function () {
+        return "직업";
+      };
+      console.log(member.getJob());
+
+      //함수 오버로딩이 없는 js
+      //이름 기준으로 들어가기 때문에 사라짐
+      //var을 사용하면 함수 선언을 했더라도 마찬가지로 지워질 수 있음
+      //let은 변경만 가능, const는 변경조차 불가
+      function f() {
+        console.log("노매개변수");
+      }
+      function f(n) {
+        console.log("매개변수");
+      }
+      f(10);
+      f();
+      let c = function () {
+        console.log("함수선언노매개변수");
+      };
+      c = function (n) {
+        console.log("함수선언매개변수");
+      };
+      c(10);
+      c();
+      const d = function () {
+        console.log("함수선언노매개변수");
+      };
+      d = function (n) {
+        console.log("함수선언매개변수");
+      };
+      d(10);
+      d();
+    </script>
+  </body>
+</html>

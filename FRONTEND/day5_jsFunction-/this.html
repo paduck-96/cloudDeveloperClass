@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>this 문법</title>
+  </head>
+  <body>
+    <script>
+      let obj = {
+        name: "sam",
+        getName: function () {
+          //js에서는 메서드 안에서
+          //자신의 객체에 속한 속성을 호출할 때에는
+          //this 추가 필수
+          return this.name;
+        },
+      };
+      console.log(obj.getName());
+
+      //생성자
+      //매개변수가 없는 생성자를 default constructor
+      let singer = function () {
+        //함수 내에
+        //this 없이 만들면 지역 변수
+        //this와 함께 만들어야 객체 속성
+        this.name = "이름없음";
+        this.song = "노래없음";
+      };
+
+      //생성자를 이용한 인스턴스
+      var obj1 = new singer(); //생성자를 통한 객체 생성
+      //매개변수가 없어 좋지 않은 생성
+      console.log(obj1);
+
+      let artist = function (name = "익명", area = "비공개") {
+        this.name = name;
+        this.area = area;
+      };
+      var a = new artist("sam", "singer");
+      var b = new artist("adele");
+      console.log(a);
+      console.log(b);
+    </script>
+  </body>
+</html>

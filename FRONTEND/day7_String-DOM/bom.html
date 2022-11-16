@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bom</title>
+  </head>
+  <body>
+    <div id="display"></div>
+    <img src="../img/desert0.jpg" alt="nothing" id="dang" />
+    <script>
+      var arr = ["aa", "bb", "ccc", "ddd"];
+      let index = 0;
+      let index2 = 0;
+      setInterval(() => {
+        document.getElementById("display").innerHTML = arr[index % arr.length];
+        index++;
+      }, 1500);
+      setInterval(() => {
+        document.getElementById("dang").src = `../img/desert${index2 % 4}.jpg`;
+        index2++;
+      }, 3000);
+
+      //user iphone 접속 여부 확인
+      //관련 코드는 클라이언트가 아닌 서버에 작성
+      var os = ["iphone"];
+      for (o of os) {
+        //os 배열에 있는 문자열이 useragent에 포함되었는지 확인
+        if (navigator.userAgent.toLowerCase().indexOf(o) >= 0) {
+          //배열에 포함된 운영체제에서 수행할 작업
+          break;
+        }
+      }
+    </script>
+  </body>
+</html>

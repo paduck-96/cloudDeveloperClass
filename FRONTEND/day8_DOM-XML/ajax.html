@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ajax text</title>
+    <script>
+      //
+      window.addEventListener("load", (e) => {
+        //데이터 정리에 필요한 dom 가져오기
+        let csv = document.getElementById("csv");
+        let json = document.getElementById("json");
+        let cJson = document.getElementById("json2");
+        let content = document.getElementById("content");
+
+        cJson.addEventListener("click", () => {
+          let request = new XMLHttpRequest();
+          request.open("GET", "data2.json");
+          request.send("");
+          request.addEventListener("load", () => {
+            let result = JSON.parse(request.responseText);
+            let counts = result.count;
+            let documents = result.documents;
+            for (doc of documents) {
+              content.innerHTML += "<p>" + "갯수 : " + doc.name + "</p>";
+            }
+            content.innerHTML += "<p>" + "갯수 : " + counts + "</p>";
+          });
+          request.addEventListener("error", () => {
+            alert(request.status);
+          });
+        });
+
+        json.addEventListener("click", (e) => {
+          let request = new XMLHttpRequest();
+          request.open("GET", "data1.json");
+          request.send("");
+          request.addEventListener("load", () => {
+            let result = JSON.parse(request.responseText);
+            content.innerHTML += "<p>" + "이름 : " + result.name + "</p>";
+          });
+          request.addEventListener("error", () => {
+            alert(request.status);
+          });
+        });
+        //csv 버튼 눌렀을 때 처리
+        csv.addEventListener("click", (e) => {
+          //ajax 요청 객체 생성
+          let request = new XMLHttpRequest();
+
+          //연결 준비
+          //첫 번째는 요청 방식, 두 번째는 url
+          request.open("GET", "data.csv");
+          //요청
+          //데이터와 함께 전송
+          request.send("");
+
+          //요청을 받기 위한 콜백
+          //정상 응답이 왔을 때
+          request.addEventListener("load", () => {
+            //xml 이외의 경우
+            //읽은 데이터 ,로 구분된 csv 형식
+            let ar = request.responseText.split(",");
+            for (name of ar) {
+              content.innerHTML += "<p>" + name + "</p>";
+            }
+          });
+          //error가 발생했을 때 처리
+          request.addEventListener("error", () => {
+            alert(request.status);
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <button id="csv">csv 읽기</button>
+    <button id="json">간단 json 읽기</button>
+    <button id="json2">복잡 json 읽기</button>
+    <div id="content">출력 영역</div>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>worker</title>
+  </head>
+  <body>
+    <h1>WEB wORKER</h1>
+    Number <input type="number" id="num" />
+    <button id="start">sum</button>
+
+    <script>
+      const num = document.getElementById("num");
+      const start = document.getElementById("start");
+
+      let worker;
+      let answer = document.createElement("h2");
+      start.addEventListener("click", () => {
+        answer.innerHTML = "";
+        if (worker) {
+          worker.terminate();
+        }
+        worker = new Worker("./worker.js");
+        worker.postMessage(Number(num.value));
+        worker.onmessage = (event) => {
+          answer.innerHTML = event.data;
+          document.body.append(answer);
+        };
+      });
+    </script>
+  </body>
+</html>

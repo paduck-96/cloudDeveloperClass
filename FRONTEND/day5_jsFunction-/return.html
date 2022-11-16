@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>return</title>
+  </head>
+  <body>
+    <script>
+      function f1() {
+        for (var i = 1; i < 10; i++) {
+          if (i % 3 == 0) {
+            //break와 유사한 효과
+            //종료하고 호출한 곳으로 돌아가게 하기 대문
+            return;
+          }
+          console.log(1);
+        }
+      }
+      f1();
+
+      //하나의 데이터를 호출한 곳으로 가져가기
+      function f2(first, second) {
+        return first + second;
+      }
+      var result = f2(100, 200); //return 결과 받아와야함
+      console.log(result);
+      result = f2(f2(1000, 3000), 2000);
+      console.log(reuslt); //함수를 매개변수로
+    </script>
+  </body>
+</html>

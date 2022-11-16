@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>geolocation</title>
+    <script>
+      let currentLat;
+      let currentLong;
+      //한 번만 사용
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          currentLat = position.coords.latitude;
+          currentLong = position.coords.longitude;
+          //위도 경도
+          alert(position.coords.latitude + ":" + position.coords.longitude);
+        },
+        (error) => {
+          alert(error.code + " => " + error.message);
+        }
+      );
+      //계속 사용
+      //   navigator.geolocation.watchPosition(
+      //     (position) => {
+      //       //위도 경도
+      //       alert(position.coords.latitude + ":" + position.coords.longitude);
+      //     },
+      //     (error) => {
+      //       alert(error.code + " => " + error.message);
+      //     }
+      //   ),
+      //     {
+      //       maximumAge: 5000,
+      //       enableHighAccuracy: true,
+      //     };
+    </script>
+  </head>
+  <body>
+    <div id="map" style="width: 700px; height: 700px"></div>
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7567a871aa5fba30da5e9f69683353ab"
+    ></script>
+    <script>
+      //코드 정리:
+      //geolocation 메서드에 바로 넣음으로써
+      //조건과 필요 스크립트 한 번에 작성 가능
+      var container = document.getElementById("map");
+      var options = {
+        center: new kakao.maps.LatLng(currentLat, currentLong),
+        level: 3,
+      };
+      var map = new kakao.maps.Map(container, options);
+      // 마커가 표시될 위치입니다
+      var markerPosition = new kakao.maps.LatLng(currentLat, currentLong);
+
+      // 마커를 생성합니다
+      var marker = new kakao.maps.Marker({
+        position: markerPosition,
+      });
+
+      // 마커가 지도 위에 표시되도록 설정합니다
+      marker.setMap(map);
+    </script>
+  </body>
+</html>

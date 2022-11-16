@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ajax-xml</title>
+    <script>
+      window.addEventListener("load", (e) => {
+        let btn = document.getElementById("btn");
+        let display = document.getElementById("display");
+
+        btn.addEventListener("click", (e) => {
+          let request = new XMLHttpRequest();
+          request.open("GET", "./resource/data.xml");
+          request.send("");
+          request.addEventListener("load", () => {
+            //xml 데이터만 추출
+            let xmldata = request.responseXML;
+            //xml 태그의 배열
+            let names = xmldata.getElementsByTagName("name");
+            //순회하면서 태그 안의 내용 추출
+            for (let i = 0; i < names.length; i++) {
+              var name = names[i].childNodes[0].nodeValue;
+              display.innerHTML += "<p> 이름: " + name + "</p>";
+            }
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <button id="btn">xml 데이터 가져오기</button>
+    <div id="display"></div>
+  </body>
+</html>

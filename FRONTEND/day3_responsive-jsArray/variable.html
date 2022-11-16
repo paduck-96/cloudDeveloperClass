@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>변수 선언 확인</title>
+  </head>
+  <body>
+    <script>
+      one = 100;
+      let data = 10;
+      function get() {
+        console.log(one); //전역변수 호출로 가능
+        two = 200; //함수 내 전역 변수
+        //scope의 법칙에 의해 가장 가까운 블럭에 값을 우선
+        //기존 데이터 영역가 참조하고 있는 데이터를 수정하는 것이 아니고 새로운 영역에 데이터 생성
+        let data = 100;
+        let three = 300; //함수 내 지역 변수
+      }
+      console.log(one);
+      //let이 아니라 var일 경우 내부>외부 데이터 호출 가능
+      get(); //함수 호출
+      console.log(two); //함수 호출 이후로 전역 변수로 지정되니 가능
+      console.log(three); //함수 내 지역 변수니 불가능
+    </script>
+  </body>
+</html>
