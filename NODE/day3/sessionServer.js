@@ -5,6 +5,7 @@ const session = require("express-session");
 const app = express();
 
 app.set("port", 8000);
+let num = 1;
 
 app.use(
   session({
@@ -21,7 +22,8 @@ app.get("/session", (req, res) => {
   } else {
     req.session.num += 1;
   }
-  res.send(req.session.num);
+  res.send("num:" + num + "<br/>" + "session의 num:" + req.session.num);
+  num = num + 1;
 });
 
 app.listen(app.get("port"), () => {
