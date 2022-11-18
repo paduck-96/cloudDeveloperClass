@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multi File Upload by ajax</title>
+  </head>
+  <body>
+    <!-- action이 없으면 요청 url 이 action이 됌
+    file 보내는 경우 enctype 변경 필수
+    method 는 post / put 만 가능 -->
+    <form id="form" method="post" enctype="multipart/form-data">
+      <p>이름 <input type="text" name="title" id="title" /></p>
+      <p>
+        파일
+        <input
+          type="file"
+          name="image"
+          id="image"
+          accept="image/*"
+          multiple="multiple"
+        />
+      </p>
+      <input type="button" value="전송" id="btn" />
+    </form>
+    <script>
+      //형태 변환을 위해서 직접 script 작성 필요
+      document.getElementById("btn").addEventListener("click", (e) => {
+        //전송 폼 데이터 생성
+        let formData = new FormData();
+        //내용 추가
+        //file 은 배열값으로 들어옴
+        //각 배열의 인덱스를 찾아서
+        //하나씩 formdata에 append 하는 형태로 진행
+        let files = document.getElementById("image").files;
+        for (let idx = 0; idx < files.length; idx++) {
+          formData.append("image", document.getElementById("image").files[idx]);
+        }
+        formData.append("title", document.getElementById("title").value);
+
+        //ajax를 이용해 전송
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "/multi", true);
+        xhr.send(formData);
+        xhr.addEventListener("load", (e) => {
+          //서버가 json 문자열을 파싱
+          let text = xhr.responseText;
+          let result = JSON.parse(text);
+          alert(result.result);
+        });
+      });
+    </script>
+  </body>
+</html>
