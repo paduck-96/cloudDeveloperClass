@@ -18,5 +18,20 @@ connection.connect((err) => {
     throw new Error("DB Connection ❌ :" + err);
   } else {
     console.log("DB Connection ✔");
+    // sql구문 문자열로 전달
+    // connection.query(
+    //   "create table family(id int auto_increment primary key, name varchar(20))"
+    // );
+    // connection.query("insert into family(name) values(?)", "박문석");
+    // connection.query("insert into family(name) values(?)", "예시");
+    // select
+    connection.query("select * from family", (err, results, fields) => {
+      if (err) {
+        throw new Error("{result:false, message: }", err.code);
+      } else {
+        let result = JSON.stringify(results);
+        console.log(result);
+      }
+    });
   }
 });
