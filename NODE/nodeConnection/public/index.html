@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Node - DB</title>
+    <link rel="stylesheet" href="/css/common.css" />
+    <script>
+      window.addEventListener("load", (e) => {
+        let allbtn = document.getElementById("allbtn");
+        allbtn.addEventListener("click", (e) => {
+          const request = new XMLHttpRequest();
+          request.open("GET", "/item/all"); //view 와 서버 독립적일 경우
+          //전체 주소 작성 필수
+          request.send("");
+          request.addEventListener("load", () => {
+            //json 문자열을 js 객체로 변환
+            const content = document.getElementById("content");
+            let data = JSON.parse(request.responseText);
+            if (data.result == true) {
+              content.innerHTML += "<h2>상품 목록</h2>";
+              content.innerHTML += "<table border='1'>";
+              content.innerHTML += "<tr class='header'>";
+              content.innerHTML += "<th align='center' width='80px'>ID</th>";
+              content.innerHTML += "<th align='center' width='320px'>이름</th>";
+              content.innerHTML += "<th align='center' width='200px'>가격</th>";
+              content.innerHTML += "</tr>";
+              //list 키 가져오기
+              let ar = data.list;
+              for (let item of ar) {
+                content.innerHTML += "<tr class='record'>";
+                content.innerHTML +=
+                  "<td align='center'>" + item.itemid + "</td>";
+                content.innerHTML +=
+                  "<td align='left'>" + item.itemname + "</td>";
+                content.innerHTML +=
+                  "<td align='right'>" + item.price + "원</td>";
+                content.innerHTML += "</tr>";
+              }
+              content.innerHTML += "</table>";
+            } else {
+              content.innerHTML = "컨텐츠 불러들이기 실패";
+            }
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div>
+      <h1>Maria DB</h1>
+      <input type="button" value="전체 데이터 가져오기" id="allbtn" />
+    </div>
+    <div>
+      <h2>데이터 출력</h2>
+      <div id="content"></div>
+    </div>
+  </body>
+</html>

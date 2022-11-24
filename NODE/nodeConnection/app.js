@@ -85,6 +85,7 @@ app.use("/", express.static("public"));
 // 파일 다운로드 모듈
 let util = require("util");
 let mime = require("mime");
+const e = require("express");
 
 // 데이터베이스 연결
 let connection = mysql.createConnection(options);
@@ -95,6 +96,33 @@ connection.connect((err) => {
     //
   }
 });
+
+///
+// 실행
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
+// 데이터 전체 가져오기
+app.get("/item/all", (req, res) => {
+  //json 문자열 형태로 데이터를 제공받아
+  //front end에서 데이터를 수신해서 출력
+  connection.query(
+    "select * from goods order by itemid desc",
+    //전체 출력에는 정렬 필수
+    //두 번째 파라미터는 ? 값,
+    (err, results, fields) => {
+      if (err) {
+        //에러 발생했다고 데이터 전송하지 않으면 안됨
+        res.json({ result: false });
+      } else {
+        res.json({ result: true, list: results });
+      }
+    }
+  );
+});
+// 일부 데이터 가져오기
+//
 
 // 에러 핸들링
 app.use((err, req, res, next) => {
