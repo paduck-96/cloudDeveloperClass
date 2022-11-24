@@ -122,7 +122,33 @@ app.get("/item/all", (req, res) => {
   );
 });
 // 일부 데이터 가져오기
-//
+// 페이지 시작하는 데이터 번호 + 한 페이지 출력 데이터 개수
+// 시작 데이터 번호 주는 경우는 데이터 갯수 고정 확률 높음
+// URl:/item/list 파라미터는 pageno 1개
+app.get("/item/list", (req, res) => {
+  //파라미터 읽기
+  let pageno = req.query.pageno;
+  if (pageno == undefined) {
+    pageno = 1;
+  }
+  /**
+   * item 테이블에서 itemid를 내림차순 후 페이지 단위
+   * select * from item order by itemid desc limit 시작번호, 5
+   * (페이지 번호-1)*데이터개수
+   */
+  connection.query(
+    "select * from goods order by itemid desc limit ?, 5",
+    [(parseInt(pageno) - 1) * 5], //파라미터는 무조건 문자열로 숫자 변환
+    (err, results, fields) => {
+      if (err) {
+        console.log(err);
+        res.json({ result: false });
+      } else {
+        res.json({ result: true, list: results });
+      }
+    }
+  );
+});
 
 // 에러 핸들링
 app.use((err, req, res, next) => {
