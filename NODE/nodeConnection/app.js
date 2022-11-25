@@ -150,6 +150,7 @@ app.get("/item/list", (req, res) => {
         list = results;
       } // 비동기 과정으로 처리
       // 명시적으로 순서 구현해줘야 함
+      // 테이블 전체 개수 가져오기
       let cnt = 0;
       connection.query(
         "select count(*) cnt from goods",
@@ -173,7 +174,22 @@ app.get("/item/list", (req, res) => {
   );
 });
 
-// 테이블 전체 개수 가져오기
+app.get("/item/detail/:itemid", (req, res) => {
+  // 상세값은 하나만 볼 수 있으니 params
+  let itemid = req.params.itemid;
+  connection.query(
+    "select * from goods where itemid = ?",
+    [itemid],
+    (err, results, field) => {
+      if (err) {
+        console.log(err);
+        res.json({ result: false });
+      } else {
+        res.json({ result: true, item: results[0] });
+      }
+    }
+  );
+});
 
 // 에러 핸들링
 app.use((err, req, res, next) => {
