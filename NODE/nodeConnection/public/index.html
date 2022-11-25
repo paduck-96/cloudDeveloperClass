@@ -9,6 +9,7 @@
     <script>
       window.addEventListener("load", (e) => {
         let allbtn = document.getElementById("allbtn");
+        let listbtn = document.getElementById("listbtn");
         allbtn.addEventListener("click", (e) => {
           const request = new XMLHttpRequest();
           request.open("GET", "/item/all"); //view 와 서버 독립적일 경우
@@ -21,7 +22,8 @@
             let str = "";
             if (data.result == true) {
               str += "<h2>상품 목록</h2>";
-              str += "<table border='1' width='100%' height='50vh'>";
+              str +=
+                "<table border='1' id='tbldata' width='100%' height='50vh'>";
               str += "<tr class='header'>";
               str += "<th align='center' width='80px'>ID</th>";
               str += "<th align='center' width='320px'>이름</th>";
@@ -43,14 +45,116 @@
             }
           });
         });
+        //현재 페이지 번호 저장
+        let pageno = 1;
+        listbtn.addEventListener("click", (e) => {
+          let request = new XMLHttpRequest();
+          request.open("GET", "/item/list?pageno=" + pageno);
+          request.send("");
+          request.addEventListener("load", () => {
+            content.innerHTML = "";
+            let data = JSON.parse(request.responseText);
+            let str = "";
+            if (data.result == true) {
+              let count = data.count;
+              let list = data.list;
+              str += "<h2>상품 목록</h2>";
+              str +=
+                "<table border='1' id='tbldata' width='100%' height='50vh'>";
+              str += "<tr class='header'>";
+              str += "<th align='right' colspan='3'>" + count + "개</th>";
+              str += "</tr>";
+              str += "<tr class='header'>";
+              str += "<th align='center' width='80px'>ID</th>";
+              str += "<th align='center' width='320px'>이름</th>";
+              str += "<th align='center' width='200px'>가격</th>";
+              str += "</tr>";
+              //데이터 목록 출력
+              for (let item of list) {
+                str += "<tr class='record'>";
+                str += "<td align='center'>" + item.itemid + "</td>";
+                str += "<td align='left'>" + item.itemname + "</td>";
+                str += "<td align='right'>" + item.price + "원</td>";
+                str += "</tr>";
+              }
+              str += "</table>";
+
+              /**
+               * 더보기 구현으로 확장성 확보
+               * 현재 페이지가 마지막이 아닌경우에만
+               */
+              if ((pageno - 1) * 5 < count) {
+                str += "<table align='center' width='500' id='tblbtn'>";
+                str += "<tr><td align='center' colspan='3'>";
+                str += "<span id='addbtn'>더보기</span></td>";
+                str += "</tr></table>";
+              }
+
+              content.innerHTML = str;
+              // 더보기 버튼 이벤트
+              /**
+               * NullException 오류 발생
+               * 항상 생기는 변수가 아니기 때문에
+               * js 에서는 없을 경우 undefined // 언어마다 유의
+               */
+              const addbtn = document.getElementById("addbtn");
+              if (addbtn != undefined) {
+                addbtn.addEventListener("click", (e) => {
+                  pageno = pageno + 1;
+                  let request = new XMLHttpRequest();
+                  request.open("GET", "/item/list?pageno=" + pageno);
+                  request.send("");
+                  // 데이터 개수 초과시 더보기 삭제
+                  if (pageno * 5 >= data.count) {
+                    pageno = pageno - 1;
+                    document.getElementById("tblbtn").remove();
+                  }
+
+                  //데이터 가져오면
+                  request.addEventListener("load", () => {
+                    let data = JSON.parse(request.responseText);
+                    let list = data.list;
+                    const table = document.getElementById("tbldata");
+                    let str = "";
+                    str += "<tr class='header'>";
+                    str += "<th align='right' colspan='3'>" + count + "개</th>";
+                    str += "</tr>";
+                    str += "<tr class='header'>";
+                    str += "<th align='center' width='80px'>ID</th>";
+                    str += "<th align='center' width='320px'>이름</th>";
+                    str += "<th align='center' width='200px'>가격</th>";
+                    str += "</tr>";
+                    for (item of list) {
+                      str += "<tr class='record'>";
+                      str += "<td align='center'>" + item.itemid + "</td>";
+                      str += "<td align='left'>" + item.itemname + "</td>";
+                      str += "<td align='right'>" + item.price + "원</td>";
+                      str += "</tr>";
+                    }
+                    table.innerHTML = str;
+                  });
+                });
+              }
+            } else {
+              content.innerHTML = "컨텐츠 불러들이기 실패";
+            }
+          });
+        });
       });
     </script>
   </head>
   <body>
+    <!--전체 데이터 출력-->
     <div>
       <h1>Maria DB</h1>
       <input type="button" value="전체 데이터 가져오기" id="allbtn" />
     </div>
+    <!--페이지 단위 보기 구현-->
+    <div>
+      <h1>Maria DB</h1>
+      <input type="button" value="페이지 단위 데이터 가져오기" id="listbtn" />
+    </div>
+    <!-- e데이터 출력-->
     <div>
       <h2>데이터 출력</h2>
       <div id="content"></div>

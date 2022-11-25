@@ -136,19 +136,44 @@ app.get("/item/list", (req, res) => {
    * select * from item order by itemid desc limit 시작번호, 5
    * (페이지 번호-1)*데이터개수
    */
+  let result = true; // 성공, 실패 여부 확인
+  let list; // 데이터 저장
+  // 데이터 목록 가져오기
   connection.query(
     "select * from goods order by itemid desc limit ?, 5",
     [(parseInt(pageno) - 1) * 5], //파라미터는 무조건 문자열로 숫자 변환
     (err, results, fields) => {
       if (err) {
         console.log(err);
-        res.json({ result: false });
+        result = false;
       } else {
-        res.json({ result: true, list: results });
-      }
+        list = results;
+      } // 비동기 과정으로 처리
+      // 명시적으로 순서 구현해줘야 함
+      let cnt = 0;
+      connection.query(
+        "select count(*) cnt from goods",
+        (err, results, fields) => {
+          if (err) {
+            console.log(err);
+            result = false;
+          } else {
+            // 하나의 행만 리턴되므로 0번째 데이터 읽기
+            cnt = results[0].cnt;
+          }
+          // 응답 전송
+          if (result === false) {
+            res.json({ result: false });
+          } else {
+            res.json({ result: true, list: list, count: cnt });
+          }
+        }
+      );
     }
   );
 });
+
+// 테이블 전체 개수 가져오기
 
 // 에러 핸들링
 app.use((err, req, res, next) => {
