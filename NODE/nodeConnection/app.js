@@ -191,6 +191,25 @@ app.get("/item/detail/:itemid", (req, res) => {
   );
 });
 
+/**
+ * 이미지 다운로드 처리
+ */
+app.get("/img/:pictureurl", (req, res) => {
+  let pictureurl = req.params.pictureurl;
+  // 이미지 파일에 대한 절대 경로 추가
+  let file =
+    "C:\\Users\\user\\kakaocloudschool\\NODE\\nodeConnection\\public\\img" +
+    "/" +
+    pictureurl;
+  // 파일 이름 가지고 타입 생성
+  let mimetype = mime.lookup(pictureurl);
+  res.setHeader("Content-disposition", "attachment; filename=" + pictureurl);
+  res.setHeader("Content-type", mimetype);
+  // 파일의 내용을 읽어서 res에 전송
+  let fileStream = fs.createReadStream(file);
+  fileStream.pipe(res);
+});
+
 // 에러 핸들링
 app.use((err, req, res, next) => {
   res.status(500).send(err.message);
