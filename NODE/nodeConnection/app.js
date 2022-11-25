@@ -210,6 +210,112 @@ app.get("/img/:pictureurl", (req, res) => {
   fileStream.pipe(res);
 });
 
+/**
+ * 데이터 삽입
+ * 외부 파일에서 import
+ */
+//const { getDate, getTime } = require("./function");
+// 현재 날짜 문자열 리턴
+const getDate = () => {
+  let date = new Date();
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1; // 월은 +1을 해야 우리가 인지하는 날이 됌
+  let day = date.getDate();
+
+  month = month >= 10 ? month : "0" + month;
+  day = day >= 10 ? day : "0" + day;
+
+  return year + "-" + month + "-" + day;
+};
+const getTime = () => {
+  let date = new Date();
+  let hour = date.getHours();
+  let minute = date.getMinutes();
+  let second = date.getSeconds();
+  hour = hour >= 10 ? hour : "0" + hour;
+  minute = minute >= 10 ? minute : "0" + minute;
+  second = second >= 10 ? second : "0" + second;
+
+  return getDate() + " " + hour + ":" + minute + ":" + second;
+};
+
+app.post("/item/insert", upload.single("pictureurl"), (req, res) => {
+  //파라미터 읽어오기
+  const itemname = req.body.itemname;
+  const description = req.body.description;
+  const price = req.body.price;
+
+  //파일 이름
+  let pictureurl;
+  if (req.file) {
+    pictureurl = req.file.filename;
+  } else {
+    pictureurl = "default.jpg";
+  }
+
+  // 가장 큰 itemid 찾기
+
+  connection.query(
+    "select max(itemid) maxid from goods",
+    (err, results, field) => {
+      let itemid;
+      //최대값이 있으면 +1, 없으면 1로 설정
+      if (results.length > 0) {
+        itemid = results[0].maxid + 1;
+      } else {
+        itemid = 1;
+      }
+
+      connection.query(
+        "insert into goods(itemid, itemname, price, description, pictureurl, updatedate) values(?, ?, ?, ?, ?, ?)",
+        [itemid, itemname, price, description, pictureurl, getDate()],
+        (err, results, field) => {
+          if (err) {
+            console.log(err);
+            res.json({ result: false });
+          } else {
+            //현재 날짜 및 시간 저장
+            const writeStream = fs.createWriteStream("./update.txt");
+            writeStream.write(getTime());
+            writeStream.end();
+
+            res.json({ result: true });
+          }
+        }
+      );
+    }
+  );
+});
+
+//데이터 삭제
+app.post("/item/delete", (req, res) => {
+  let itemid = req.body.itemid;
+  connection.query(
+    "delete from goods where itemid=?",
+    [itemid],
+    (err, results, fields) => {
+      if (err) {
+        console.log(err);
+        res.json({ result: false });
+      } else {
+        //현재 날짜 및 시간 저장
+        const writeStream = fs.createWriteStream("./update.txt");
+        writeStream.write(getTime());
+        writeStream.end();
+
+        res.json({ result: true });
+      }
+    }
+  );
+});
+
+//수정 get 요청
+app.get("/item/update", (req, res) => {
+  //public의 update.html 읽어옴
+  fs.readFile("./public/update.html", (err, data) => {
+    res.end(data);
+  });
+});
 // 에러 핸들링
 app.use((err, req, res, next) => {
   res.status(500).send(err.message);
