@@ -164,21 +164,21 @@ app.get("/item/list", async (req, res) => {
   }
 });
 
-app.get("/item/detail/:itemid", (req, res) => {
+app.get("/item/detail/:itemid", async (req, res) => {
   // 상세값은 하나만 볼 수 있으니 params
   let itemid = req.params.itemid;
-  connection.query(
-    "select * from goods where itemid = ?",
-    [itemid],
-    (err, results, field) => {
-      if (err) {
-        console.log(err);
-        res.json({ result: false });
-      } else {
-        res.json({ result: true, item: results[0] });
-      }
-    }
-  );
+  try {
+    let item = await Good.findOne({
+      where: {
+        //where 절은 메서드 안에 추가
+        itemid,
+      },
+    });
+    res.json({ result: true, item });
+  } catch (err) {
+    console.log(err);
+    res.json({ result: false });
+  }
 });
 
 /**
@@ -270,25 +270,24 @@ app.post("/item/insert", upload.single("pictureurl"), async (req, res) => {
 });
 
 //데이터 삭제
-app.post("/item/delete", (req, res) => {
+app.post("/item/delete", async (req, res) => {
   let itemid = req.body.itemid;
-  connection.query(
-    "delete from goods where itemid=?",
-    [itemid],
-    (err, results, fields) => {
-      if (err) {
-        console.log(err);
-        res.json({ result: false });
-      } else {
-        //현재 날짜 및 시간 저장
-        const writeStream = fs.createWriteStream("./update.txt");
-        writeStream.write(getTime());
-        writeStream.end();
-
-        res.json({ result: true });
-      }
-    }
-  );
+  try {
+    await Good.update(
+      {
+        itemname,
+        price,
+        description,
+        pictureurl,
+        updatedate: getDate(),
+      },
+      { where: itemid }
+    );
+    res.json({ result: true });
+  } catch (err) {
+    console.log(err);
+    res.json({ result: false });
+  }
 });
 
 //수정 get 요청
