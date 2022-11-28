@@ -1,2 +1,7 @@
 wootec.html
 node_modules
+.update.txt
+/public/img
+NODE/nodeConnection/update.txt
+NODE/nodeConnection/log
+NODE/nodeConnection/public/img

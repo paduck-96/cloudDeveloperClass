@@ -138,7 +138,7 @@ app.get("/item/all", async (req, res) => {
 // 페이지 시작하는 데이터 번호 + 한 페이지 출력 데이터 개수
 // 시작 데이터 번호 주는 경우는 데이터 갯수 고정 확률 높음
 // URl:/item/list 파라미터는 pageno 1개
-app.get("/item/list", (req, res) => {
+app.get("/item/list", async (req, res) => {
   //파라미터 읽기
   let pageno = req.query.pageno;
   if (pageno == undefined) {
@@ -149,42 +149,19 @@ app.get("/item/list", (req, res) => {
    * select * from item order by itemid desc limit 시작번호, 5
    * (페이지 번호-1)*데이터개수
    */
-  let result = true; // 성공, 실패 여부 확인
-  let list; // 데이터 저장
-  // 데이터 목록 가져오기
-  connection.query(
-    "select * from goods order by itemid desc limit ?, 5",
-    [(parseInt(pageno) - 1) * 5], //파라미터는 무조건 문자열로 숫자 변환
-    (err, results, fields) => {
-      if (err) {
-        console.log(err);
-        result = false;
-      } else {
-        list = results;
-      } // 비동기 과정으로 처리
-      // 명시적으로 순서 구현해줘야 함
-      // 테이블 전체 개수 가져오기
-      let cnt = 0;
-      connection.query(
-        "select count(*) cnt from goods",
-        (err, results, fields) => {
-          if (err) {
-            console.log(err);
-            result = false;
-          } else {
-            // 하나의 행만 리턴되므로 0번째 데이터 읽기
-            cnt = results[0].cnt;
-          }
-          // 응답 전송
-          if (result === false) {
-            res.json({ result: false });
-          } else {
-            res.json({ result: true, list: list, count: cnt });
-          }
-        }
-      );
-    }
-  );
+  try {
+    // 테이블 데이터 개수 가져오기
+    let cnt = await Good.count();
+    // 페이지 단위로 데이터 목록화하기
+    let list = await Good.findAll({
+      offset: (parseInt(pageno) - 1) * 5,
+      limit: 5,
+    });
+    res.json({ result: true, count: cnt, list });
+  } catch (err) {
+    console.log(err);
+    res.json({ result: false });
+  }
 });
 
 app.get("/item/detail/:itemid", (req, res) => {
