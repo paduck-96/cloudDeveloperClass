@@ -273,16 +273,11 @@ app.post("/item/insert", upload.single("pictureurl"), async (req, res) => {
 app.post("/item/delete", async (req, res) => {
   let itemid = req.body.itemid;
   try {
-    await Good.update(
-      {
-        itemname,
-        price,
-        description,
-        pictureurl,
-        updatedate: getDate(),
+    await Good.destroy({
+      where: {
+        itemid,
       },
-      { where: itemid }
-    );
+    });
     res.json({ result: true });
   } catch (err) {
     console.log(err);
@@ -298,7 +293,7 @@ app.get("/item/update", (req, res) => {
   });
 });
 // 수정 post 데이터
-app.post("/item/update", upload.single("pictureurl"), (req, res) => {
+app.post("/item/update", upload.single("pictureurl"), async (req, res) => {
   const { itemid, itemname, price, description, oldpictureurl } = req.body;
   let pictureurl; // 수정할 파일 이름
   if (req.file) {
@@ -308,22 +303,28 @@ app.post("/item/update", upload.single("pictureurl"), (req, res) => {
     pictureurl = oldpictureurl;
   }
 
-  // 이후 db 정리
-  connection.query(
-    "update goods set itemname=?, price=?, description=?, pictureurl=?, updatedate=? where itemid=?",
-    [itemname, price, description, pictureurl, getDate(), itemid],
-    (err, results, field) => {
-      if (err) {
-        console.log(err);
-        res.send({ result: false });
-      } else {
-        const writeStream = fs.createWriteStream("./update.txt");
-        writeStream.write(getTime());
-        writeStream.end();
-        res.json({ result: true, results });
-      }
-    }
-  );
+  try {
+    await Good.update(
+      {
+        itemname,
+        price,
+        description,
+        pictureurl,
+        updatedate: getDate(),
+      },
+      { where: { itemid } }
+    );
+
+    //현재 날짜 및 시간 저장
+    const writeStream = fs.createWriteStream("./update.txt");
+    writeStream.write(getTime());
+    writeStream.end();
+
+    res.json({ result: true });
+  } catch (err) {
+    console.log(err);
+    res.json({ result: false });
+  }
 });
 
 app.get("/item/updatedate", (req, res) => {
