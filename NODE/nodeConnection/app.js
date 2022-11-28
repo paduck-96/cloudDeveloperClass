@@ -98,6 +98,22 @@ connection.connect((err) => {
 });
 
 ///
+/**
+ * sequelize 를 이용한 DB 연결
+ * require 를 할 때 디렉토리 이름 기재
+ * 디렉토리 안의 index.js 의 내용 import
+ */
+const { sequelize } = require("./models/index");
+sequelize
+  .sync({ force: false })
+  .then(() => {
+    console.log("DB 연결 성공");
+  })
+  .catch((err) => {
+    console.log("DB 연결 실패");
+  });
+
+///
 // 실행
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
@@ -312,8 +328,42 @@ app.post("/item/delete", (req, res) => {
 //수정 get 요청
 app.get("/item/update", (req, res) => {
   //public의 update.html 읽어옴
-  fs.readFile("./public/update.html", (err, data) => {
+  fs.readFile("public/update.html", (err, data) => {
     res.end(data);
+  });
+});
+// 수정 post 데이터
+app.post("/item/update", upload.single("pictureurl"), (req, res) => {
+  const { itemid, itemname, price, description, oldpictureurl } = req.body;
+  let pictureurl; // 수정할 파일 이름
+  if (req.file) {
+    // 새로 선택한 파일 유무에 따라 다름
+    pictureurl = req.file.filename;
+  } else {
+    pictureurl = oldpictureurl;
+  }
+
+  // 이후 db 정리
+  connection.query(
+    "update goods set itemname=?, price=?, description=?, pictureurl=?, updatedate=? where itemid=?",
+    [itemname, price, description, pictureurl, getDate(), itemid],
+    (err, results, field) => {
+      if (err) {
+        console.log(err);
+        res.send({ result: false });
+      } else {
+        const writeStream = fs.createWriteStream("./update.txt");
+        writeStream.write(getTime());
+        writeStream.end();
+        res.json({ result: true, results });
+      }
+    }
+  );
+});
+
+app.get("/item/updatedate", (req, res) => {
+  fs.readFile("./update.txt", (err, data) => {
+    res.json({ result: data.toString() });
   });
 });
 // 에러 핸들링
