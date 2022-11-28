@@ -2,4 +2,4 @@ wootec.html
 node_modules
 *.log
 *.txt
-NODE/nodeConnection/public/img
+public/img
