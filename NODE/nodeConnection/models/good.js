@@ -22,6 +22,14 @@ module.exports = class Good extends Sequelize.Model {
           type: Sequelize.STRING(200),
           allowNull: true,
         },
+        pictureurl: {
+          type: Sequelize.STRING(100),
+          allowNull: true,
+        },
+        updatedate: {
+          type: Sequelize.STRING(20),
+          allowNull: true,
+        },
       },
       {
         sequelize,
