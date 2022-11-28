@@ -103,6 +103,7 @@ connection.connect((err) => {
  * require 를 할 때 디렉토리 이름 기재
  * 디렉토리 안의 index.js 의 내용 import
  */
+const { Good } = require("./models");
 const { sequelize } = require("./models/index");
 sequelize
   .sync({ force: false })
@@ -255,7 +256,8 @@ const getTime = () => {
   return getDate() + " " + hour + ":" + minute + ":" + second;
 };
 
-app.post("/item/insert", upload.single("pictureurl"), (req, res) => {
+//Sequalize를 통한 삽입 과정 구현
+app.post("/item/insert", upload.single("pictureurl"), async (req, res) => {
   //파라미터 읽어오기
   const itemname = req.body.itemname;
   const description = req.body.description;
@@ -268,39 +270,62 @@ app.post("/item/insert", upload.single("pictureurl"), (req, res) => {
   } else {
     pictureurl = "default.jpg";
   }
+  // 가장 큰 itemid를 이용해서 itemid 생성
+  let itemid = 1;
+  try {
+    let x = await Good.max("itemid");
+    itemid = x + 1;
+  } catch (err) {
+    console.log(err);
+  }
+  //데이터 삽입
+  Good.create({
+    itemid,
+    itemname,
+    price,
+    description,
+    pictureurl,
+    updatedate: getDate(),
+  });
+
+  //현재 날짜 및 시간 저장
+  const writeStream = fs.createWriteStream("./update.txt");
+  writeStream.write(getTime());
+  writeStream.end();
+
+  res.json({ result: true });
 
   // 가장 큰 itemid 찾기
+  // connection.query(
+  //   "select max(itemid) maxid from goods",
+  //   (err, results, field) => {
+  //     let itemid;
+  //     //최대값이 있으면 +1, 없으면 1로 설정
+  //     if (results.length > 0) {
+  //       itemid = results[0].maxid + 1;
+  //     } else {
+  //       itemid = 1;
+  //     }
 
-  connection.query(
-    "select max(itemid) maxid from goods",
-    (err, results, field) => {
-      let itemid;
-      //최대값이 있으면 +1, 없으면 1로 설정
-      if (results.length > 0) {
-        itemid = results[0].maxid + 1;
-      } else {
-        itemid = 1;
-      }
+  //     connection.query(
+  //       "insert into goods(itemid, itemname, price, description, pictureurl, updatedate) values(?, ?, ?, ?, ?, ?)",
+  //       [itemid, itemname, price, description, pictureurl, getDate()],
+  //       (err, results, field) => {
+  //         if (err) {
+  //           console.log(err);
+  //           res.json({ result: false });
+  //         } else {
+  //           //현재 날짜 및 시간 저장
+  //           const writeStream = fs.createWriteStream("./update.txt");
+  //           writeStream.write(getTime());
+  //           writeStream.end();
 
-      connection.query(
-        "insert into goods(itemid, itemname, price, description, pictureurl, updatedate) values(?, ?, ?, ?, ?, ?)",
-        [itemid, itemname, price, description, pictureurl, getDate()],
-        (err, results, field) => {
-          if (err) {
-            console.log(err);
-            res.json({ result: false });
-          } else {
-            //현재 날짜 및 시간 저장
-            const writeStream = fs.createWriteStream("./update.txt");
-            writeStream.write(getTime());
-            writeStream.end();
-
-            res.json({ result: true });
-          }
-        }
-      );
-    }
-  );
+  //           res.json({ result: true });
+  //         }
+  //       }
+  //     );
+  //   }
+  // );
 });
 
 //데이터 삭제
