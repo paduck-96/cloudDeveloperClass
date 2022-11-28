@@ -121,23 +121,19 @@ app.get("/", (req, res) => {
 });
 
 // 데이터 전체 가져오기
-app.get("/item/all", (req, res) => {
-  //json 문자열 형태로 데이터를 제공받아
-  //front end에서 데이터를 수신해서 출력
-  connection.query(
-    "select * from goods order by itemid desc",
-    //전체 출력에는 정렬 필수
-    //두 번째 파라미터는 ? 값,
-    (err, results, fields) => {
-      if (err) {
-        //에러 발생했다고 데이터 전송하지 않으면 안됨
-        res.json({ result: false });
-      } else {
-        res.json({ result: true, list: results });
-      }
-    }
-  );
+app.get("/item/all", async (req, res) => {
+  /**
+   * 전체 데이터 가져오기 수정본
+   */
+  try {
+    let list = await Good.findAll(); //기능 내포
+    res.json({ result: true, list });
+  } catch (err) {
+    console.log(err);
+    res.json({ result: false });
+  }
 });
+
 // 일부 데이터 가져오기
 // 페이지 시작하는 데이터 번호 + 한 페이지 출력 데이터 개수
 // 시작 데이터 번호 주는 경우는 데이터 갯수 고정 확률 높음
@@ -294,38 +290,6 @@ app.post("/item/insert", upload.single("pictureurl"), async (req, res) => {
   writeStream.end();
 
   res.json({ result: true });
-
-  // 가장 큰 itemid 찾기
-  // connection.query(
-  //   "select max(itemid) maxid from goods",
-  //   (err, results, field) => {
-  //     let itemid;
-  //     //최대값이 있으면 +1, 없으면 1로 설정
-  //     if (results.length > 0) {
-  //       itemid = results[0].maxid + 1;
-  //     } else {
-  //       itemid = 1;
-  //     }
-
-  //     connection.query(
-  //       "insert into goods(itemid, itemname, price, description, pictureurl, updatedate) values(?, ?, ?, ?, ?, ?)",
-  //       [itemid, itemname, price, description, pictureurl, getDate()],
-  //       (err, results, field) => {
-  //         if (err) {
-  //           console.log(err);
-  //           res.json({ result: false });
-  //         } else {
-  //           //현재 날짜 및 시간 저장
-  //           const writeStream = fs.createWriteStream("./update.txt");
-  //           writeStream.write(getTime());
-  //           writeStream.end();
-
-  //           res.json({ result: true });
-  //         }
-  //       }
-  //     );
-  //   }
-  // );
 });
 
 //데이터 삭제
