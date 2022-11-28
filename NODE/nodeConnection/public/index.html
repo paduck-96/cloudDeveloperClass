@@ -185,7 +185,7 @@
                     "사진" +
                     "<img src='/img/" +
                     item.pictureurl +
-                    "'/td></tr>";
+                    "'/></td></tr>";
                   display += "<td align='center'><table>";
                   display += "<tr height='50'><td width='80'>상품명</td>";
                   display += "<td width='160'>" + item.itemname + "</td>";
@@ -211,7 +211,7 @@
                   display += "</table></td></tr></table>";
 
                   content.innerHTML = display;
-                  //데이터 수정을 눌렀을 때 ㅓㅊ리
+                  //데이터 수정을 눌렀을 때 처리
                   let updatebtn = document.getElementById("updatebtn");
                   if (updatebtn != undefined) {
                     updatebtn.addEventListener("click", (e) => {
@@ -221,6 +221,54 @@
                       request.addEventListener("load", () => {
                         let html = request.responseText;
                         content.innerHTML = html;
+                        //수정 하기 위해서 원본 데이터 출력
+                        /**
+                         * value 주고 추가적인 수정 방지
+                         * readonly 옵션 true
+                         */
+                        document.getElementById("itemid").value = item.itemid;
+                        document.getElementById("itemid").readOnly = true;
+                        document.getElementById("itemname").value =
+                          item.itemname;
+                        document.getElementById("price").value = item.price;
+                        document.getElementById("description").value =
+                          item.description;
+                        /**
+                         * 이미지 처리
+                         * 원본의 이름을 숨기고 다른 방식으로 출력*/
+                        document.getElementById("oldpictureurl").value =
+                          item.pictureurl;
+                        document.getElementById("picture").src =
+                          "/img/" + item.pictureurl;
+
+                        // 수정 hhtp요청
+                        let f = document.getElementById("updateform");
+                        if (f == undefined) console.log("ff");
+                        if (f != undefined) {
+                          console.log("yes");
+                          f.addEventListener("submit", (e) => {
+                            e.preventDefault();
+                            /**
+                             * 폼 데이터 전송 방법
+                             * 파일 같이 전송시 추가사항 작성
+                             */
+                            const formData = new FormData(
+                              document.getElementById("updateform")
+                            );
+                            let request = new XMLHttpRequest();
+                            request.open("POST", "/item/update", true);
+                            request.send(formData);
+                            request.addEventListener("load", () => {
+                              let data = JSON.parse(request.responseText);
+                              if (data.result == true) {
+                                document.getElementById("listbtn").click();
+                                alert("수정 성공");
+                              } else {
+                                alert("수정 실패");
+                              }
+                            });
+                          });
+                        }
                       });
                     });
                   }
@@ -282,6 +330,7 @@
           if (f != undefined) {
             f.addEventListener("submit", (e) => {
               e.preventDefault();
+
               //폼 데이터 찾아옥
               const formData = new FormData(
                 document.getElementById("insertform")
@@ -293,7 +342,7 @@
               request.addEventListener("load", () => {
                 let data = JSON.parse(request.responseText);
                 if (data.result) {
-                  document.getElementById("listbtn").clic();
+                  document.getElementById("listbtn").click();
                 } else {
                   alert("삽입 실패");
                 }
