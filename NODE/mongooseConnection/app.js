@@ -80,6 +80,16 @@ app.use(
   })
 );
 
+const { sequelize } = require("./models");
+sequelize
+  .sync({ force: false })
+  .then(() => {
+    console.log("데이터베이스 접속 성공:)");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
 //라우터 설정
 const pageRouter = require("./routes/page");
 app.use("/", pageRouter);
