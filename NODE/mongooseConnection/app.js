@@ -90,9 +90,19 @@ sequelize
     console.log(err);
   });
 
+//passport 설정
+const passport = require("passport");
+const passportConfig = require("./passport");
+passportConfig();
+app.use(passport.initialize());
+// 세션 기능 모듈이 알아서 찾아서 사용
+app.use(passport.session());
+
 //라우터 설정
 const pageRouter = require("./routes/page");
 app.use("/", pageRouter);
+const authRouter = require("./routes/auth");
+app.use("/auth", authRouter);
 
 //에러가 발생한 경우 처리(404 에러 처리)
 app.use((req, res, next) => {

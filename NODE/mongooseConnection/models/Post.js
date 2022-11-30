@@ -18,7 +18,7 @@ module.exports = class Post extends Sequelize.Model {
         sequelize,
         timestamps: true,
         underscored: false,
-        modelName: Post,
+        modelName: "Post",
         tableName: "posts",
         paranoid: true,
         charset: "utf8mb4",
@@ -26,7 +26,7 @@ module.exports = class Post extends Sequelize.Model {
       }
     );
   }
-  static associations(db) {
+  static associate(db) {
     db.Post.belongsTo(db.User);
     // 다 대 다 관계에서는 테이블이 하나 생성
     // through 가 테이블 이름이 됌

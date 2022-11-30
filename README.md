@@ -716,6 +716,8 @@ ip 나열을 해놓은 white list를 만들어서 해당 ip만 허용
 사용자 요청에 따른 **작업**
 
 - 비지니스 로직
-  - 로직
+  - 로직(Service)
   - Persistency Store / Repository
 - 공통 관심 사항
+  - 로그인 여부 등
+    - middleware, Filter, AOP 등
