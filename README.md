@@ -721,3 +721,32 @@ ip 나열을 해놓은 white list를 만들어서 해당 ip만 허용
 - 공통 관심 사항
   - 로그인 여부 등
     - middleware, Filter, AOP 등
+
+---
+
+## Free 와 Premium 구분
+
+### boolean
+
+true 와 false를 이용해서 구분 가능
+
+- 3개 비교 불가
+
+### int
+
+0 과 1 또는 1 과 2 형태로 구분 가능
+
+- 0보다 클 경우의 수들은 다 정수로 비교 어려움
+
+### string
+
+문자열로 저장해서 구분
+
+### ENUM(Enum)
+
+정해진 데이터만 삽입 가능
+
+```sql
+-- DB에서 ENUM 역할
+type varchar(100) (check type in ("free", "premium"))
+```
