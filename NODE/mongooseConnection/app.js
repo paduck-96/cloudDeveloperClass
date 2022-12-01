@@ -103,6 +103,10 @@ const pageRouter = require("./routes/page");
 app.use("/", pageRouter);
 const authRouter = require("./routes/auth");
 app.use("/auth", authRouter);
+const postRouter = require("./routes/post");
+app.use("/post", postRouter);
+const userRouter = require("./routes/user");
+app.use("/use", userRouter);
 
 //에러가 발생한 경우 처리(404 에러 처리)
 app.use((req, res, next) => {

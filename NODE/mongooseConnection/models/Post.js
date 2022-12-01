@@ -30,6 +30,6 @@ module.exports = class Post extends Sequelize.Model {
     db.Post.belongsTo(db.User);
     // 다 대 다 관계에서는 테이블이 하나 생성
     // through 가 테이블 이름이 됌
-    db.Post.belongsTo(db.Hashtag, { through: "PostHashtag" });
+    db.Post.belongsToMany(db.Hashtag, { through: "PostHashtag" });
   }
 };
