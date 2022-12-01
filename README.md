@@ -750,3 +750,5 @@ true 와 false를 이용해서 구분 가능
 -- DB에서 ENUM 역할
 type varchar(100) (check type in ("free", "premium"))
 ```
+
+---
