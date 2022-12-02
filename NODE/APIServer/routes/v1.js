@@ -12,8 +12,8 @@ router.get("/posts/my", verifyToken, (req, res) => {
       console.log(posts);
       res.json({ code: 200, payload: posts });
     })
-    .catch((error) => {
-      console.error(error);
+    .catch((err) => {
+      console.error(err);
       return res.status(500).json({ code: 500, message: "서버 에러" });
     });
 });
@@ -46,8 +46,8 @@ router.post("/token", async (req, res) => {
       message: "토큰 발급 완료",
       token,
     });
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     return res.status(500).json({
       code: 500,
       message: "서버에러",
