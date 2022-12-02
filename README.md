@@ -752,3 +752,9 @@ type varchar(100) (check type in ("free", "premium"))
 ```
 
 ---
+
+## JS 논리 연산
+
+Boolean 이외의 데이터도 논리 연산 가능  
+0이 아닌 숫자 나 **null** 이나 **undefined** 가 아니면 TRUE  
+연산의 결과는 boolean 이 아닌 `연산하는 데이터의 자료형`
