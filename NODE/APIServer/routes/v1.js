@@ -1,8 +1,21 @@
 const express = require("express");
-const { verifyToken, jwt } = require("./middlewares");
-const Domain = require("../models/domain");
+const { verifyToken } = require("./middlewares");
+const { Domain, Hashtag, Post, User } = require("../models");
+
 const router = express.Router();
 
+// 데이터 리턴 요청 처리
+router.get("/posts/my", verifyToken, (req, res) => {
+  Post.findAll({ where: { userId: req.decoded.id } })
+    .then((posts) => {
+      console.log(posts);
+      res.json({ code: 200, payload: posts });
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ code: 500, message: "서버 에러" });
+    });
+});
 // 토큰 확인 처리
 router.post("/token", async (req, res) => {
   const { clientSecret } = req.body;
