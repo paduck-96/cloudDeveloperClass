@@ -34,3 +34,27 @@ exports.verifyToken = (req, res, next) => {
     });
   }
 };
+
+// 사용량 제한 미들웨어
+const RateLimit = require("express-rate-limit");
+exports.apiLimiter = RateLimit({
+  windowMs: 60 * 1000, //기본 ms, 1분 단위
+  max: 10,
+  delayMs: 0,
+  handler(req, res) {
+    res.status(
+      this.statusCode.json({
+        code: this.statusCode,
+        message: "1분 단위로 요청 필요",
+      })
+    );
+  },
+});
+
+// 구버전 API 요청 시 동작할 미들웨어
+exports.deprecated = (req, res) => {
+  res.status(410).json({
+    code: 410,
+    message: "새 버전을 사용해주세요",
+  }); //더 이상 없음
+};
