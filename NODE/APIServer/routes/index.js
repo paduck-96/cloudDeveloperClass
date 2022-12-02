@@ -35,4 +35,5 @@ router.post("/domain", isLoggedIn, async (req, res, next) => {
     next(err);
   }
 });
+
 module.exports = router;
