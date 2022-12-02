@@ -1,9 +1,12 @@
 const express = require("express");
-const { verifyToken } = require("./middlewares");
+const { verifyToken, deprecated } = require("./middlewares");
 const jwt = require("jsonwebtoken");
 const { Domain, Hashtag, Post, User } = require("../models");
 
 const router = express.Router();
+
+//모든 라우팅 처리에서 새 버전 적용
+router.use(deprecated);
 
 // 데이터 리턴 요청 처리
 router.get("/posts/my", verifyToken, (req, res) => {
