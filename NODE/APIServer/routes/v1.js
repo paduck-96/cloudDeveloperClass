@@ -1,5 +1,6 @@
 const express = require("express");
 const { verifyToken } = require("./middlewares");
+const jwt = require("jsonwebtoken");
 const { Domain, Hashtag, Post, User } = require("../models");
 
 const router = express.Router();
@@ -23,7 +24,7 @@ router.post("/token", async (req, res) => {
     // 도메인 찾아오기
     const domain = await Domain.findOne({
       where: { clientSecret },
-      include: { model: URLSearchParams, attribute: ["nick", "id"] },
+      include: { model: User, attribute: ["nick", "id"] },
     });
     if (!domain) {
       return res.status(401).json({

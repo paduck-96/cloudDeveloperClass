@@ -6,7 +6,6 @@ const nunjucks = require("nunjucks");
 const dotenv = require("dotenv");
 
 dotenv.config();
-const indexRouter = require("./routes");
 
 const app = express();
 app.set("port", process.env.PORT || 4000);
@@ -30,6 +29,7 @@ app.use(
   })
 );
 
+const indexRouter = require("./routes");
 app.use("/", indexRouter);
 
 app.use((req, res, next) => {
