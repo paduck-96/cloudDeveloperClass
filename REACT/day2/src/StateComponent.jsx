@@ -15,9 +15,12 @@ class StateComponent extends Component {
         <p>숫자:{this.state.number}</p>
         <button
           onClick={(e) => {
-            this.setState({
-              number: this.state.number + 1,
-            });
+            this.setState(
+              //number: this.state.number + 1,
+              (prevState) => {
+                return { number: prevState.numbe + 1 };
+              }
+            );
           }}
         >
           버튼
