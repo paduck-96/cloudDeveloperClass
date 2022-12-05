@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 class StateComponent extends Component {
+  // state = {number:0}; 를 통해 변환 가능
   // 생성자
   constructor(props) {
     // 상위 클래스 생성자 호출
@@ -8,7 +9,6 @@ class StateComponent extends Component {
     //state 생성
     this.state = { number: 0 };
   }
-
   render() {
     return (
       <>
