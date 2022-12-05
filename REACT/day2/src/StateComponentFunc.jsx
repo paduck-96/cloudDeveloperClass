@@ -14,11 +14,11 @@ const StateComponentFunc = () => {
     <>
       <button onClick={onClickEnter}>입장</button>
       <button onClick={onClickLeave}>퇴장</button>
-      <h1 style={{ color }}>{message}</h1>
-      <button style={{ color }} onClick={() => setColor("red")}>
+      <h1>{message}</h1>
+      <button style={{ color: "red" }} onClick={() => setColor("red")}>
         빨강
       </button>
-      <button style={{ color }} onClick={() => setColor("blue")}>
+      <button style={{ color: "blue" }} onClick={() => setColor("blue")}>
         파랑
       </button>
     </>
