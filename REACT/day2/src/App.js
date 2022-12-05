@@ -2,6 +2,7 @@ import MyComponent from "./MyComponent";
 import StateComponent from "./StateComponent";
 import StateComponentFunc from "./StateComponentFunc";
 import EventPractice from "./EventPractice";
+import EventPracticeFunc from "./EventPracticeFunc";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <StateComponent />;
       <StateComponentFunc />
       <EventPractice />
+      <EventPracticeFunc />
     </div>
   );
 }
