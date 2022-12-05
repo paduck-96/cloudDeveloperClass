@@ -11,7 +11,7 @@ class ValidationSample extends Component {
   };
 
   //Ref(다른 DOM 객체를 참조할 수 있는 속성)
-  input = React.createRef();
+  //input = React.createRef();
 
   handleButtonClick = (e) => {
     this.setState({
@@ -19,7 +19,9 @@ class ValidationSample extends Component {
       validated: this.state.password === "0000",
     });
     // input 이 참조하는 객체에 focus 설정
-    this.input.current.focus();
+    // createRef 함수로 만든 경우
+    //this.input.current.focus();
+    this.input.focus();
   };
   handleChange = (e) => {
     this.setState({
@@ -31,7 +33,8 @@ class ValidationSample extends Component {
       <div>
         <input
           type="password"
-          ref={this.input}
+          //ref={this.input}
+          ref={(ref) => (this.input = ref)}
           value={this.state.password}
           className={
             this.state.clicked
