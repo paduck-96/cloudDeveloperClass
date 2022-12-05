@@ -22,7 +22,7 @@ class StateComponent extends Component {
                 console.log(this.state);
               }
               //   (prevState) => {
-              //     return { number: prevState.numbe + 1 };
+              //     return { number: prevState.number + 1 };
               //   }
             );
           }}
