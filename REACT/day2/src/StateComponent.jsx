@@ -16,10 +16,14 @@ class StateComponent extends Component {
         <button
           onClick={(e) => {
             this.setState(
-              //number: this.state.number + 1,
-              (prevState) => {
-                return { number: prevState.numbe + 1 };
+              { number: this.state.number + 1 },
+              () => {
+                console.log("state 값 변경");
+                console.log(this.state);
               }
+              //   (prevState) => {
+              //     return { number: prevState.numbe + 1 };
+              //   }
             );
           }}
         >
