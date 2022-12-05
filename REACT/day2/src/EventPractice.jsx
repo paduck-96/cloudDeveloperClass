@@ -5,21 +5,22 @@ class EventPractice extends Component {
     name: "",
   };
 
-  handleChange(e) {
+  handleChange = (e) => {
     this.setState({
       name: e.target.value,
     });
-  }
-  handleClick(e) {
+  };
+  handleClick = (e) => {
     alert(this.state.name);
     this.setState({ name: "" });
-  }
+  };
 
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-  }
+  // 인스턴스의 메서드로 자동 변환
+  // constructor(props) {
+  //   super(props);
+  //   this.handleChange = this.handleChange.bind(this);
+  //   this.handleClick = this.handleClick.bind(this);
+  // }
   render() {
     return (
       <>
