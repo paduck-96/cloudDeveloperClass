@@ -4,6 +4,22 @@ class EventPractice extends Component {
   state = {
     name: "",
   };
+
+  handleChange(e) {
+    this.setState({
+      name: e.target.value,
+    });
+  }
+  handleClick(e) {
+    alert(this.state.name);
+    this.setState({ name: "" });
+  }
+
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
   render() {
     return (
       <>
@@ -13,18 +29,22 @@ class EventPractice extends Component {
           name="message"
           placeholder="이름 입력"
           value={this.state.name}
-          onChange={(e) => {
-            this.setState({ name: e.target.value });
+          onChange={
+            this.handleChange
+            // 함수화 (e) => {
+            // this.setState({ name: e.target.value });
             // 콘솔 출력 console.log(e.target.value);
-          }}
+          }
         />
         <button
-          onClick={(e) => {
-            alert(this.state.name);
-            this.setState({
-              name: "",
-            });
-          }}
+          onClick={
+            this.handleClick
+            //(e) => {
+            //alert(this.state.name);
+            //this.setState({
+            //  name: "",
+            //});
+          }
         >
           확인
         </button>
