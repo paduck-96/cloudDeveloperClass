@@ -27,14 +27,21 @@ class Iteration extends Component {
     const { names } = this.state;
     //slice(매개변수 2개) 받아서 배열을 잘라내는 과정
     //시작위치와 마지막 위치 대입
+    //     this.setState({
+    //       names: [names.slice(0, index), names.slice(index + 1, names.length)],
+    //     });
+
+    // 넘어온 인덱스와 배열의 인덱스가 다른 것만 추출
     this.setState({
-      names: [names.slice(0, index), names.slice(index + 1, names.length)],
+      names: names.filter((item, e) => e !== index),
     });
   };
+
   render() {
     const namesList = this.state.names.map((name, index) => (
-      <li key={index} onDoubleClick={(e) => this.handleRemove(index)}>
+      <li key={index}>
         {name}
+        <span onClick={(e) => this.handleRemove(index)}> ❌</span>
       </li>
     ));
     return (
