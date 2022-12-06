@@ -10,8 +10,13 @@ import UserList from "./UserList";
 import CreateUser from "./CreateUser";
 
 //하위 컴포넌트 Createuser 활용
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 
+// active true 데이터 개수
+const countActiveUser = (users) => {
+  console.log("사용자 수 세기");
+  return users.filter((user) => user.active).length;
+};
 function App() {
   //UserList 받기
   // 배열의 데이터 수정시 컴포넌트가 리랜더링 될 수 있도록
@@ -72,6 +77,11 @@ function App() {
       )
     );
   };
+
+  // 활성화된 user 개수 세기
+  // 계속해서 리랜더링 되므로 유저 수 계산
+  // 변화 생길 때 함수 호출하고 나머지는 결과 복사
+  const count = useMemo(() => countActiveUser(users), [users]);
   return (
     <div>
       <ErrorBoundary>
@@ -88,6 +98,7 @@ function App() {
           onChange={onChange}
           onCreate={onCreate}
         />
+        <div>활성화된 유저 수 : {count}</div>
       </ErrorBoundary>
     </div>
   );
