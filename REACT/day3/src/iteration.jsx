@@ -24,6 +24,12 @@ class Iteration extends Component {
   // 데이터 삭제 함수
   // index를 매개변수로 받아서 삭제
   handleRemove = (index) => {
+    //script 도 작성 가능
+    //삭제 여부 확인
+    let result = window.confirm("삭제하시겠습니까?");
+    if (result === false) {
+      return;
+    }
     const { names } = this.state;
     //slice(매개변수 2개) 받아서 배열을 잘라내는 과정
     //시작위치와 마지막 위치 대입
