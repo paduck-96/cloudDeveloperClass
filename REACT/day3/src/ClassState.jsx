@@ -20,9 +20,7 @@ class ClassState extends Component {
         <p> 클릭 {this.state.count} 수행</p>
         <button
           onClick={(e) => {
-            this.setState({
-              name: this.state.count + 1,
-            });
+            this.setState({ count: this.state.count + 1 });
           }}
         >
           +1
