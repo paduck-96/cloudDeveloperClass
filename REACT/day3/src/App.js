@@ -1,10 +1,13 @@
 import "./App.css";
+import ErrorBoundary from "./ErrorBoundary";
 import Iteration from "./iteration";
 
 function App() {
   return (
     <div>
-      <Iteration />
+      <ErrorBoundary>
+        <Iteration />
+      </ErrorBoundary>
     </div>
   );
 }
