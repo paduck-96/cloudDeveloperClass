@@ -5,6 +5,7 @@ import Iteration from "./iteration";
 import ClassState from "./ClassState";
 import InputSample from "./InputSample";
 import ClassEffect from "./ClassEffect";
+import ClassEffectFunc from "./ClassEffectFunc";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <FunctionState />
         <InputSample />
         <ClassEffect />
+        <ClassEffectFunc />
       </ErrorBoundary>
     </div>
   );
