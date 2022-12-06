@@ -14,6 +14,8 @@ import { useState, useRef } from "react";
 
 function App() {
   //UserList 받기
+  // 배열의 데이터 수정시 컴포넌트가 리랜더링 될 수 있도록
+  // state로 생성
   const [users, setUsers] = useState([
     { id: 1, username: "adam", email: "1234@naver.com" },
     { id: 2, username: "jacob", email: "1421@naver.com" },
@@ -29,27 +31,31 @@ function App() {
 
   const onChange = (e) => {
     setInputs({
+      ...inputs,
       [e.target.name]: e.target.value,
     });
   };
 
   //ref 변수
-  const nextId = useRef(3);
+  const nextId = useRef(5);
 
   const onCreate = () => {
+    // 하나의 객체 생성
     const user = {
       id: nextId.current,
       username,
       email,
     };
+    // users 에 user 객체 추가
     setUsers([...users, user]);
+    // 입력 요소 초기화
     setInputs({
       username: "",
       email: "",
     });
+    // 다음 삽입 위해 증가
     nextId.current += 1;
   };
-
   return (
     <div>
       <ErrorBoundary>
