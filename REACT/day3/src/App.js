@@ -56,6 +56,12 @@ function App() {
     // 다음 삽입 위해 증가
     nextId.current += 1;
   };
+
+  const onRemove = (id) => {
+    // users state 에서 id=id 인 데이터 삭제
+    // id가 일치하지 않은 데이터로만 새로운 배열 생성
+    setUsers(users.filter((user) => user.id !== id));
+  };
   return (
     <div>
       <ErrorBoundary>
@@ -65,7 +71,7 @@ function App() {
         <InputSample />
         <ClassEffect />
         <ClassEffectFunc />
-        <UserList users={users} />
+        <UserList users={users} onRemove={onRemove} />
         <CreateUser
           username={username}
           email={email}
