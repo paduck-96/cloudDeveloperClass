@@ -1,13 +1,20 @@
-import React from "react";
+import React, { Component } from "react";
 
-const Iteration = () => {
-  const names = ["Javascript", "Java", "Python", "C#", "Go", "Rust"];
-  const namesList = names.map((name, index) => <li key={index}>{name}</li>);
-  return (
-    <div>
-      <ul>{namesList}</ul>
-    </div>
-  );
-};
+class Iteration extends Component {
+  state = {
+    names: ["JavaScript"],
+  };
+
+  render() {
+    const namesList = this.state.names.map((name, index) => (
+      <li key={index}>{name}</li>
+    ));
+    return (
+      <div>
+        <ul>{namesList}</ul>
+      </div>
+    );
+  }
+}
 
 export default Iteration;
