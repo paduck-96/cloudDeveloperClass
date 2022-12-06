@@ -52,7 +52,6 @@ class Iteration extends Component {
     ));
     return (
       <div>
-        {this.state.error.value}
         <input
           type="text"
           onChange={this.handleChange}
