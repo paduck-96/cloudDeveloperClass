@@ -17,10 +17,10 @@ function App() {
   // 배열의 데이터 수정시 컴포넌트가 리랜더링 될 수 있도록
   // state로 생성
   const [users, setUsers] = useState([
-    { id: 1, username: "adam", email: "1234@naver.com" },
-    { id: 2, username: "jacob", email: "1421@naver.com" },
-    { id: 3, username: "pax", email: "4678@naver.com" },
-    { id: 4, username: "john", email: "198765@naver.com" },
+    { id: 1, username: "adam", email: "1234@naver.com", active: false },
+    { id: 2, username: "jacob", email: "1421@naver.com", active: false },
+    { id: 3, username: "pax", email: "4678@naver.com", active: false },
+    { id: 4, username: "john", email: "198765@naver.com", active: false },
   ]);
 
   const [inputs, setInputs] = useState({
@@ -45,6 +45,7 @@ function App() {
       id: nextId.current,
       username,
       email,
+      active: false,
     };
     // users 에 user 객체 추가
     setUsers([...users, user]);
@@ -62,6 +63,15 @@ function App() {
     // id가 일치하지 않은 데이터로만 새로운 배열 생성
     setUsers(users.filter((user) => user.id !== id));
   };
+
+  // id에 해당하는 데이터 active 속성 값 반전
+  const onToggle = (id) => {
+    setUsers(
+      users.map((user) =>
+        user.id === id ? { ...user, active: !user.active } : user
+      )
+    );
+  };
   return (
     <div>
       <ErrorBoundary>
@@ -71,7 +81,7 @@ function App() {
         <InputSample />
         <ClassEffect />
         <ClassEffectFunc />
-        <UserList users={users} onRemove={onRemove} />
+        <UserList users={users} onRemove={onRemove} onToggle={onToggle} />
         <CreateUser
           username={username}
           email={email}
