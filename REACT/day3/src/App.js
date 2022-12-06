@@ -3,6 +3,7 @@ import ErrorBoundary from "./ErrorBoundary";
 import FunctionState from "./FunctionState";
 import Iteration from "./iteration";
 import ClassState from "./ClassState";
+import InputSample from "./InputSample";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Iteration />
         <ClassState />
         <FunctionState />
+        <InputSample />
       </ErrorBoundary>
     </div>
   );
