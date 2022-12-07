@@ -4,7 +4,7 @@ import CSSModule from "./CSSModule";
 import Button from "./components/button";
 import styles from "./App.scss";
 import classNames from "classnames/bind";
-
+import StyledComponent from "./components/StyledComponent";
 const cx = classNames.bind(styles);
 
 function App() {
@@ -15,6 +15,7 @@ function App() {
         <div className="nav-wrapper">머터리얼 디자인</div>
       </nav>
       <div>머터리얼 디자인</div>
+
       <div className={cx("box", { blue: isBlue })}>
         <div className={cx("box-inside")}></div>
       </div>
@@ -22,6 +23,23 @@ function App() {
       <Average />
       <CSSModule />
       <Button />
+      <StyledComponent />
+      <button
+        onClick={(e) => {
+          let request = new XMLHttpRequest();
+          request.open("GET", "https://jsonplaceholder.typicode.com/users");
+          request.send("");
+          request.addEventListener("load", () => {
+            let data = JSON.parse(request.responseText);
+            console.log(data);
+          });
+          request.addEventListener("error", (err) => {
+            console.log(err);
+          });
+        }}
+      >
+        다운로드
+      </button>
     </div>
   );
 }
