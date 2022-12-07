@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 
 const getAverage = (numbers) => {
   console.log("평균 계산");
@@ -22,16 +22,19 @@ const Average = () => {
   const [number, setNumber] = useState("");
 
   // 하나의 값 입력 받는 함수
-  const onChange = (e) => {
+  const onChange = useCallback((e) => {
     setNumber(e.target.value);
-  };
+  }, []);
   // 배열 삽입 함수
-  const onInsert = (e) => {
-    //const nextList = list.concat(parseInt(number));
-    const nextList = [...list, Number(number)];
-    setList(nextList);
-    setNumber("");
-  };
+  const onInsert = useCallback(
+    (e) => {
+      //const nextList = list.concat(parseInt(number));
+      const nextList = [...list, Number(number)];
+      setList(nextList);
+      setNumber("");
+    },
+    [number, list]
+  );
 
   return (
     <div>
@@ -50,4 +53,4 @@ const Average = () => {
   );
 };
 
-export default Average;
+export default React.memo(Average);
