@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 const getAverage = (numbers) => {
   console.log("평균 계산");
@@ -16,6 +16,9 @@ const getAverage = (numbers) => {
 
 const Average = () => {
   const [list, setList] = useState([]);
+  // useMemo를 이용해 평균 계산
+  //list 변화가 있을 경우에만 메서드 호출(리랜더링)
+  const avg = useMemo(() => getAverage(list), [list]);
   const [number, setNumber] = useState("");
 
   // 하나의 값 입력 받는 함수
@@ -24,8 +27,8 @@ const Average = () => {
   };
   // 배열 삽입 함수
   const onInsert = (e) => {
-    const nextList = list.concat(parseInt(number));
-    //const nextList = [...list, number];
+    //const nextList = list.concat(parseInt(number));
+    const nextList = [...list, Number(number)];
     setList(nextList);
     setNumber("");
   };
@@ -41,7 +44,7 @@ const Average = () => {
       </ul>
       <div>
         <b>평균 : </b>
-        {getAverage(list)}
+        {avg}
       </div>
     </div>
   );
