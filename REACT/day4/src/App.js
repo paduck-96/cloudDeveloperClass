@@ -26,16 +26,10 @@ function App() {
       <StyledComponent />
       <button
         onClick={(e) => {
-          let request = new XMLHttpRequest();
-          request.open("GET", "https://jsonplaceholder.typicode.com/users");
-          request.send("");
-          request.addEventListener("load", () => {
-            let data = JSON.parse(request.responseText);
-            console.log(data);
-          });
-          request.addEventListener("error", (err) => {
-            console.log(err);
-          });
+          fetch("https://jsonplaceholder.typicode.com/users")
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            .catch((err) => console.log(err));
         }}
       >
         다운로드
