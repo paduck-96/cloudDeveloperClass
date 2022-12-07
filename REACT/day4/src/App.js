@@ -1,4 +1,6 @@
 import "./App.css";
+import axios from "axios";
+
 import Average from "./Average";
 import CSSModule from "./CSSModule";
 import Button from "./components/button";
@@ -25,12 +27,12 @@ function App() {
       <Button />
       <StyledComponent />
       <button
-        onClick={(e) => {
-          fetch("https://jsonplaceholder.typicode.com/users")
-            .then((response) => response.json())
-            .then((data) => console.log(data))
-            .catch((err) => console.log(err));
-        }}
+        onClick={(e) =>
+          axios
+            .get("https://jsonplaceholder.typicode.com/users")
+            .then((res) => console.log(res.data))
+            .catch((err) => console.log(err.message))
+        }
       >
         다운로드
       </button>
