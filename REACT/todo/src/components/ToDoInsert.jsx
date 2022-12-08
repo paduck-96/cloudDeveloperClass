@@ -20,6 +20,11 @@ const ToDoInsert = ({ onInsert }) => {
   //어떤 action을 받느냐에 따라 submit 혹은 button으로 할 지 결정
   const onSubmit = useCallback(
     (e) => {
+      const result = window.confirm(`${value} 추가?`);
+      if (result == false) {
+        e.preventDefault();
+        return;
+      }
       onInsert(value);
       setValue("");
       e.preventDefault();

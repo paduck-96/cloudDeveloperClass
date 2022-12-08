@@ -10,23 +10,13 @@ function App() {
   const [todos, setToDos] = useState([
     {
       id: 1,
-      text: "HTML, CSS, JavaScript",
+      text: "todo 실행하기",
       checked: true,
-    },
-    {
-      id: 2,
-      text: "Node",
-      checked: false,
-    },
-    {
-      id: 3,
-      text: "React",
-      checked: false,
     },
   ]);
 
   //아이디 변수 생성
-  const nextId = useRef(4);
+  const nextId = useRef(2);
   // 삽입 처리 함수
   // todos 에 변화 생길 경우에만 함수 재생성
   const onInsert = useCallback(
