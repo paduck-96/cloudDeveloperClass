@@ -21,7 +21,7 @@ const ToDoInsert = ({ onInsert }) => {
   const onSubmit = useCallback(
     (e) => {
       const result = window.confirm(`${value} 추가?`);
-      if (result == false) {
+      if (result === false) {
         e.preventDefault();
         return;
       }

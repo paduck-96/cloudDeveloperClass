@@ -11,7 +11,7 @@ import { useCallback } from "react";
 
 import cn from "classnames";
 
-const ToDoListItem = ({ todo, onRemove }) => {
+const ToDoListItem = ({ todo, onRemove, onToggle }) => {
   // 넘어온 데이터 중에서 text 와 checked 만 분해
   const { id, text, checked } = todo;
 
@@ -27,7 +27,10 @@ const ToDoListItem = ({ todo, onRemove }) => {
   );
   return (
     <div className="ToDoListItem">
-      <div className={cn("checkbox", { checked })}>
+      <div
+        className={cn("checkbox", { checked })}
+        onClick={(e) => onToggle(id)}
+      >
         {checked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
         <div className="text">{text}</div>
       </div>
