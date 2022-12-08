@@ -32,11 +32,19 @@ function App() {
     [todos]
   );
 
+  // 데이터 삭제
+  const onRemove = useCallback(
+    (id) => {
+      setToDos(todos.filter((todo) => todo.id !== id));
+    },
+    [todos]
+  );
+
   return (
     <div className="App">
       <ToDoTemplate>
         <ToDoInsert onInsert={onInsert} />
-        <ToDoList todos={todos} />
+        <ToDoList todos={todos} onRemove={onRemove} />
       </ToDoTemplate>
     </div>
   );
