@@ -28,38 +28,29 @@ function App() {
   const nextId = useRef(2001);
   // 삽입 처리 함수
   // todos 에 변화 생길 경우에만 함수 재생성
-  const onInsert = useCallback(
-    (text) => {
-      const todo = {
-        id: nextId.current,
-        text,
-        checked: false,
-      };
-      setToDos(todos.concat(todo));
-      nextId.current += 1;
-    },
-    [todos]
-  );
+  const onInsert = useCallback((text) => {
+    const todo = {
+      id: nextId.current,
+      text,
+      checked: false,
+    };
+    setToDos((todos) => todos.concat(todo));
+    nextId.current += 1;
+  }, []);
 
   // 데이터 삭제
-  const onRemove = useCallback(
-    (id) => {
-      setToDos(todos.filter((todo) => todo.id !== id));
-    },
-    [todos]
-  );
+  const onRemove = useCallback((id) => {
+    setToDos((todos) => todos.filter((todo) => todo.id !== id));
+  }, []);
 
   // 데이터 수정
-  const onToggle = useCallback(
-    (id) => {
-      setToDos(
-        todos.map((todo) =>
-          todo.id === id ? { ...todo, checked: !todo.checked } : todo
-        )
-      );
-    },
-    [todos]
-  );
+  const onToggle = useCallback((id) => {
+    setToDos((todos) =>
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, checked: !todo.checked } : todo
+      )
+    );
+  }, []);
   return (
     <div className="App">
       <ToDoTemplate>
