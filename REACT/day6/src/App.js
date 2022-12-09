@@ -9,6 +9,7 @@ import Articles from "./Articles";
 import Layout from "./Layout";
 import MyPage from "./MyPage";
 import Login from "./Login";
+import ColorBox from "./ColorBox";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path="/articles" element={<Articles />}>
           <Route path=":id" element={<Article />} />
         </Route>
+        <Route path="colorbox" element={<ColorBox />} />
         <Route path="*" element={<Article />} />
       </Routes>
     </div>
