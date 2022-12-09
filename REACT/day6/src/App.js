@@ -1,5 +1,7 @@
 import "./App.css";
 import { useCallback, useRef, useState } from "react";
+import produce from "immer";
+
 function App() {
   // 컴포넌트 안에서 사용할 변수 생성
   const nextId = useRef(1);
@@ -10,15 +12,20 @@ function App() {
   });
 
   // input 입력 시 state 수정
-  const onChange = useCallback(
-    (e) => {
-      setForm({
-        ...form,
-        [e.target.name]: [e.target.value],
-      });
-    },
-    [form]
-  );
+  const onChange = useCallback((e) => {
+    //   setForm({
+    //     ...form,
+    //     [e.target.name]: [e.target.value],
+    //   });
+
+    setForm(
+      // spread 연산자 처리 불필요
+      //draft 자체게 주어지는 state 의 복제본
+      produce((draft) => {
+        draft[e.target.name] = e.target.value;
+      })
+    );
+  }, []);
 
   // 입력받은 데이터 등록
   // 컴포넌트 속 함수는 useCallback 권장
@@ -32,31 +39,41 @@ function App() {
         username: form.username,
       };
 
-      setData({
-        ...data,
-        array: data.array.concat(info),
-      });
+      // setData({
+      //   ...data,
+      //   array: data.array.concat(info),
+      // });
+
+      setData(
+        produce((draft) => {
+          draft.array.push(info);
+        })
+      );
 
       setForm({
         name: "",
         username: "",
       });
-
       nextId.current += 1;
     },
-    [data, form.name, form.username]
+    [form.name, form.username]
   );
 
   // 항목 삭제
-  const onRemove = useCallback(
-    (id) => {
-      setData({
-        ...data,
-        array: data.array.filter((info) => info.id !== id),
-      });
-    },
-    [data]
-  );
+  const onRemove = useCallback((e) => {
+    // setData({
+    //   ...data,
+    //   array: data.array.filter((info) => info.id !== id),
+    // });
+    setData(
+      produce((draft) => {
+        draft.array.splice(
+          draft.array.findIndex((info) => info.id === e),
+          1
+        );
+      })
+    );
+  }, []);
 
   return (
     <div className="App">
