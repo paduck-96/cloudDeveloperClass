@@ -2,3 +2,45 @@
 # yarn lockfile v1
 
 
+create-app@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/create-app/-/create-app-2.1.0.tgz#4b676dda6adbee1dfe47abe119f0866d062b816f"
+  integrity sha512-l5BpRKaqWDYBKYet9bGb5Uykaydf9P/3db52z8n/IxuEuqK2ws0uv4az3cnAXorqjgIdXgGQCWMf0VyR2r0N/g==
+  dependencies:
+    create-history "^2.1.0"
+    path-to-regexp "^1.7.0"
+
+create-history@^2.1.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/create-history/-/create-history-2.1.1.tgz#b08438baf48d85811959f71d562ae119e1f173e2"
+  integrity sha512-N9SrJvIhOSSBin/weI28eZ1KA/L0Nn+nSyi5dO3gSk8SsJQq9OomT4IeDfpwUpQNnbZnlbrVsbntYEAL1xz/qQ==
+  dependencies:
+    tiny-invariant "^1.1.0"
+    tiny-warning "^1.0.3"
+
+day6@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/day6/-/day6-3.0.0.tgz#fb2f6ddddd91bc64498d14453506060a89693e27"
+  integrity sha512-qWJ+hin2d92wPL0jVAV/fpj3IaCjNtQQS1NFkKArEyZpt9kJwpa9IwMA7YAlx8DQQ+z8AYWkl/3srvlPv2D3NQ==
+
+isarray@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/isarray/-/isarray-0.0.1.tgz#8a18acfca9a8f4177e09abfc6038939b05d1eedf"
+  integrity sha512-D2S+3GLxWH+uhrNEcoh/fnmYeP8E8/zHl644d/jdA0g2uyXvy3sb0qxotE+ne0LtccHknQzWwZEzhak7oJ0COQ==
+
+path-to-regexp@^1.7.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-1.8.0.tgz#887b3ba9d84393e87a0a0b9f4cb756198b53548a"
+  integrity sha512-n43JRhlUKUAlibEJhPeir1ncUID16QnEjNpwzNdO3Lm4ywrBpBZ5oLD0I6br9evr1Y9JTqwRtAh7JLoOzAQdVA==
+  dependencies:
+    isarray "0.0.1"
+
+tiny-invariant@^1.1.0:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.3.1.tgz#8560808c916ef02ecfd55e66090df23a4b7aa642"
+  integrity sha512-AD5ih2NlSssTCwsMznbvwMZpJ1cbhkGd2uueNxzv2jDlEeZdU04JQfRnggJQ8DrcVBGjAsCKwFBbDlVNtEMlzw==
+
+tiny-warning@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
+  integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
