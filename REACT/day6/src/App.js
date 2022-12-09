@@ -7,6 +7,8 @@ import Profile from "./profile";
 import Article from "./Article";
 import Articles from "./Articles";
 import Layout from "./Layout";
+import MyPage from "./MyPage";
+import Login from "./Login";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <a href="/immer">불변성</a>
       </ul>
       <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/mypage" element={<MyPage />} />
         <Route element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/about" element={<About />} />
