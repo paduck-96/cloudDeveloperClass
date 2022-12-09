@@ -90,11 +90,11 @@ const Immer = () => {
 
       <div>
         <ul>
-          {data.array.map((info) => {
+          {data.array.map((info) => (
             <li key={info.id} onClick={() => onRemove(info.id)}>
               {info.username} ({info.name})
-            </li>;
-          })}
+            </li>
+          ))}
         </ul>
       </div>
     </div>
