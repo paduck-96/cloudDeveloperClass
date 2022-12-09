@@ -4,6 +4,8 @@ import { Routes, Route, Link } from "react-router-dom";
 import About from "./About";
 import Home from "./home";
 import Profile from "./profile";
+import Article from "./Article";
+import Articles from "./Articles";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/immer" element={<Immer />} />
         <Route path="/profile/:username" element={<Profile />} />
+        <Route path="/articles" element={<Articles />} />
+        <Route path="/articles/:id" element={<Article />} />
       </Routes>
     </div>
   );
