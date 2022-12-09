@@ -6,6 +6,7 @@ import Home from "./home";
 import Profile from "./profile";
 import Article from "./Article";
 import Articles from "./Articles";
+import Layout from "./Layout";
 
 function App() {
   return (
@@ -23,12 +24,16 @@ function App() {
         <a href="/immer">불변성</a>
       </ul>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/immer" element={<Immer />} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/immer" element={<Immer />} />
+        </Route>
         <Route path="/profile/:username" element={<Profile />} />
-        <Route path="/articles" element={<Articles />} />
-        <Route path="/articles/:id" element={<Article />} />
+
+        <Route path="/articles" element={<Articles />}>
+          <Route path=":id" element={<Article />} />
+        </Route>
       </Routes>
     </div>
   );
