@@ -46,7 +46,7 @@ const initialState = {
   ],
 };
 
-// state,action으로 구성된 reducer 생성
+// state,action으로 구성된 redux 생성
 const todos = (state = initialState, action) => {
   switch (action.type) {
     case CHANGE_INPUT:
