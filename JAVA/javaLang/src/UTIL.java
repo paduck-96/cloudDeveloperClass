@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class UTIL {
@@ -28,5 +29,19 @@ public class UTIL {
         System.out.println(Arrays.toString(datas));
         Arrays.sort(datas);
         System.out.println(Arrays.toString(datas));
+
+        String [] names ={"리치히", "하일스베르", "로섬","고슬링"};
+        System.out.println(Arrays.toString(names));
+
+        String [] copy = Arrays.copyOf(names, names.length);
+        Arrays.sort(copy);
+        System.out.println(Arrays.toString(copy));
+        Arrays.sort(copy, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o2.compareTo(o1);
+            }
+        });
+        System.out.println(Arrays.toString(copy));
     }
 }
