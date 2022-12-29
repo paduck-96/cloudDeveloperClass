@@ -11,7 +11,7 @@
     <title>요청</title>
 </head>
 <body>
-<form action="process.jsp" method="get">
+<form action="PageController" method="get">
   숫자<input type="number" name="first"><br>
   숫자<input type="number" name="second"><br>
   <input type="submit" value="전송">
