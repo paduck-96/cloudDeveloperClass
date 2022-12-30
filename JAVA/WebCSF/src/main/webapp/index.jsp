@@ -12,5 +12,7 @@
 <a href="createcookie.jsp">생성 이동</a>
 <a href="deletecookie.jsp">삭제 이동</a>
 <a href="idsave.jsp">아이디 저장</a>
+
+<h1>프로젝트 구조 실습</h1>
 </body>
 </html>
