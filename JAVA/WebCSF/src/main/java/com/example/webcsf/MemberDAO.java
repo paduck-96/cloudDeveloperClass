@@ -65,7 +65,7 @@ public class MemberDAO{
             if(rs.next()){
                 vo=new MemberVO();
                 vo.setMid(rs.getString("mid"));
-                vo.setMpw(rs.getString("mpw"));
+                vo.setMname(rs.getString("mname"));
             }
         }catch (Exception e){
             System.out.println(e.getLocalizedMessage());
