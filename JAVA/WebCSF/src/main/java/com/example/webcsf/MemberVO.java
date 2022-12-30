@@ -4,6 +4,7 @@ public class MemberVO {
     private String mid;
     private String mpw;
     private String mname;
+    private String uuid;
 
     public MemberVO() {
     }
@@ -31,6 +32,14 @@ public class MemberVO {
 
     public void setMname(String mname) {
         this.mname = mname;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     @Override

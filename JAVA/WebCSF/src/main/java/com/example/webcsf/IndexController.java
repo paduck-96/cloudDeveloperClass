@@ -6,20 +6,18 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 
-@WebServlet(name = "LogoutController", value = "/logout")
-public class LogoutController extends HttpServlet {
-    public LogoutController(){
-        super();
-    }
+@WebServlet(name = "IndexController", value = "/")
+public class IndexController extends HttpServlet {
+    public IndexController() {
+    super();
+}
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //세션 초기화
-        request.getSession().invalidate();
-        response.sendRedirect("./");
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-doGet(request,response);
+
     }
 }

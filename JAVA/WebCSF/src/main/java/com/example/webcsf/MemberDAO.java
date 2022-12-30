@@ -51,7 +51,7 @@ public class MemberDAO{
     }
     // 로그인 처리를 위한 메서드
     //아이디 와 비밀번호를 받아서 처리한 후 회원정보 리턴
-    public MemberVO login(String mid, String mpw){
+    public MemberVO login(String mid, String mpw) {
         MemberVO vo = null;
         try {
             // 수행할 sql 생성
@@ -62,15 +62,49 @@ public class MemberDAO{
             // SQL 실행
             rs = pstmt.executeQuery();
 
-            if(rs.next()){
-                vo=new MemberVO();
+            if (rs.next()) {
+                vo = new MemberVO();
                 vo.setMid(rs.getString("mid"));
                 vo.setMname(rs.getString("mname"));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
             e.printStackTrace();
         }
         return vo;
     }
-}
+        // uuid를 가지고 로그인
+        public MemberVO login(String uuid){
+            MemberVO vo = null;
+            try{
+                String sql = "select * from tbl_number where uuid=?";
+                pstmt = connection.prepareStatement(sql);
+                pstmt.setString(1, uuid);
+
+                rs = pstmt.executeQuery();
+
+                if(rs.next()){
+                    vo = new MemberVO();
+                    vo.setMid(rs.getString("mid"));
+                    vo.setMname(rs.getString("mname"));
+                }
+            }catch (Exception e){
+                System.out.println(e.getLocalizedMessage());
+                e.printStackTrace();
+            }
+            return vo;
+        }
+        
+        public void updateUUID(String mid, String uuid){
+        try{
+            String query = "update tbl_member set uuid=? where mid=?";
+            pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, uuid);
+            pstmt.setString(2, mid);
+            pstmt.executeUpdate();
+        }catch(Exception e){
+            System.out.println(e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+        }
+    }
