@@ -37,7 +37,7 @@ public class LoginCheckFilter extends HttpFilter implements Filter {
                 if(cookie.getName().equals("rememberKey")){
                     String uuid = cookie.getValue();
                     MemberDTO dto = memberService.login(uuid);
-                    req.getSession().setAttribute("logininfo", cookies);
+                    req.getSession().setAttribute("logininfo", dto);
                     // 메인페이지로 리다이렉트
                     res.sendRedirect("./");
                     return;

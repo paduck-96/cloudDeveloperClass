@@ -8,7 +8,9 @@ import java.io.IOException;
 
 @WebServlet(name = "LogoutController", value = "/logout")
 public class LogoutController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
     public LogoutController(){
+
         super();
     }
     @Override

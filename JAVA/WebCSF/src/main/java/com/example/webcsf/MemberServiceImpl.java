@@ -3,7 +3,7 @@ package com.example.webcsf;
 public class MemberServiceImpl implements MemberService{
     //DAO 변수
     private MemberDAO memberDAO;
-    private MemberServiceImpl(){
+    private MemberServiceImpl() {
         memberDAO = MemberDAO.getInstance();
     }
 

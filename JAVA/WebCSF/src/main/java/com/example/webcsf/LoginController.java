@@ -18,7 +18,6 @@ public class LoginController extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("로그인 요청");
         //webapp 디렉토리의 member 디렉토리의 login.jsp 로 포워딩
         request.getRequestDispatcher("/member/login.jsp").forward(request,response);
     }

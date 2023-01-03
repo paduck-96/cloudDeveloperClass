@@ -17,12 +17,12 @@
     if(loginInfo == null){
 %>
 <a href="login">로그인</a>
-<%--<%--%>
-<%--    }else{--%>
-<%--        dto.MemberDTO dto = (dto.MemberDTO)loginInfo;--%>
-<%--%>--%>
-<%--<%=dto.getMname() %> 님 환영합니다<br>--%>
-<%--<a href="logout">로그아웃</a>--%>
+<%
+    }else{
+        dto.MemberDTO dto = (dto.MemberDTO)loginInfo;
+%>
+<%=dto.getMname() %> 님 환영합니다<br>
+<a href="logout">로그아웃</a>
 <%
     }
 %>

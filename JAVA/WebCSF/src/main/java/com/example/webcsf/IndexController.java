@@ -8,6 +8,7 @@ import java.io.IOException;
 
 @WebServlet(name = "IndexController", value = "/")
 public class IndexController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
     public IndexController() {
     super();
 }

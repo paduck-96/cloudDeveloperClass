@@ -7,12 +7,13 @@ import java.sql.ResultSet;
 
 public class MemberDAO{
     //싱글톤 패턴을 위한 코드
-
-    private static MemberDAO dao;
-
     private MemberDAO(){
 
     }
+
+    private static MemberDAO dao;
+
+
 
     public static MemberDAO getInstance(){
         if(dao==null){
