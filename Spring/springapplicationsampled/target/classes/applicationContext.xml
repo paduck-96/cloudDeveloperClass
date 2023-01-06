@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- persistence.ItemRepository 클래스의 인스턴스를
+itemRepository라는 이름으로 생성 -->
+<!-- 
+ <bean id="itemRepository" class="persistence.ItemRepository"/>
+-->
+
+<!-- 생성자를 이용한 주입
+String itemName = new String("배") -->
+<!-- 
+<bean id="itemName" class="java.lang.String">
+<constructor-arg><value>배</value></constructor-arg>
+</bean>
+ -->
+<!--  
+	<bean id="item" class="domain.Item">
+		<property name="itemId"><value>1</value></property>
+		<property name="itemName"><ref bean="itemName"/></property>
+		<property name="price" value="2000" />
+		<property name="description"><value>비타민 C가 풍부한 과일</value></property>
+		<property name="pictureUrl" value="kiwi.png" />
+	</bean>
+	
+	<bean id="memberRepository" class="di.persistence.MemberRepositoryImpl">
+	</bean>
+	<bean id="memberService" class="di.service.MemberServiceImpl">
+	
+	</bean>
+	<bean id="memberController" class="di.controller.MemberController">
+	
+	</bean>
+-->
+<!-- 어노테이션을 이용한 설정을 사용할 수 있게 해주는 것 -->
+<!-- <context:annotation-config /> -->
+
+ 
+<!-- di 패키지에 어노테이션이 추가된 클래스의 bean 자동 생성 -->
+<context:component-scan base-package="di"/>
+
+<bean id="dataSource"
+class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+<property name="driverClassName">
+<value>org.mariadb.jdbc.Driver</value>
+</property>
+<property name="url">
+<value>jdbc:mariadb://localhost:3306/java</value>
+</property>
+<property name="username">
+<value>root</value>
+</property>
+<property name="password">
+<value>rootPassword</value>
+</property>
+</bean>
+<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
+<property name="dataSource" ref="dataSource" />
+<property name="configLocation" value="classpath:/mybatis/mybatis-config.xml" />
+</bean>
+</beans>
