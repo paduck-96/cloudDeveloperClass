@@ -63,4 +63,18 @@ public class PageController {
                 }).collect(Collectors.toList());
         model.addAttribute("list", list);
     }
+
+    @GetMapping({"/exlink", "/exformat"})
+    public void exlink(Model model){
+        List <SampleVO> list = new ArrayList<>();
+        for(int i = 0; i<10; i++){
+            SampleVO vo = SampleVO.builder().sno(i).first("First : " + i)
+                    .last("last : " + i).regTime(LocalDateTime.now()).build();
+            list.add(vo);
+        }
+        model.addAttribute("list", list);
+    }
+
+    @GetMapping("/exlayout1")
+    public void exlayout(){}
 }
