@@ -1,28 +1,33 @@
 package com.kakao.board.service;
 
-import com.kakao.board.board.ReplyDTO;
 import com.kakao.board.domain.Board;
 import com.kakao.board.domain.Reply;
+import com.kakao.board.dto.ReplyDTO;
 
 import java.util.List;
 
-public interface ReplyService {
-    // 댓글 등록
+public interface ReplyService{
+    //댓글 등록
     Long register(ReplyDTO replyDTO);
-    // 댓글 목록
+    //댓글 목록
     List<ReplyDTO> getList(Long bno);
-    // 댓글 수정
+    //댓글 수정
     Long modify(ReplyDTO replyDTO);
-    // 댓글 삭제
+    //댓글 삭제
     Long remove(Long rno);
 
-    //ReplyDTO 를 Entity 로 변환
+    //ReplyDTO를 Reply Entity로 변환해주는 메서드
     default Reply dtoToEntity(ReplyDTO dto){
         Board board = Board.builder().bno(dto.getBno()).build();
-        Reply reply = Reply.builder().text(dto.getText()).replyer(dto.getReplyer()).board(board).build();
+        Reply reply = Reply.builder()
+                .text(dto.getText())
+                .replyer(dto.getReplyer())
+                .board(board)
+                .build();
         return reply;
     }
-    //ReplyEntity 를 DTO로 변환
+
+    //Reply Entity를 ReplyDTO로 변환해주는 메서드
     default ReplyDTO entityToDTO(Reply reply){
         ReplyDTO dto = ReplyDTO.builder()
                 .rno(reply.getRno())
@@ -32,5 +37,6 @@ public interface ReplyService {
                 .modDate(reply.getModDate())
                 .build();
         return dto;
+
     }
 }

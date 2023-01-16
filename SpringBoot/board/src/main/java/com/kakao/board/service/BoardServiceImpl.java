@@ -1,13 +1,13 @@
 package com.kakao.board.service;
 
-import com.kakao.board.board.BoardDTO;
-import com.kakao.board.board.PageRequestDTO;
-import com.kakao.board.board.PageResponseDTO;
+import com.kakao.board.dto.BoardDTO;
+import com.kakao.board.dto.PageRequestDTO;
+import com.kakao.board.dto.PageResponseDTO;
 import com.kakao.board.domain.Board;
 import com.kakao.board.domain.Member;
 import com.kakao.board.persistence.BoardRepository;
 import com.kakao.board.persistence.ReplyRepository;
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -39,18 +39,23 @@ public class BoardServiceImpl implements BoardService{
         Function<Object [], BoardDTO> fn = (
                 en -> entityToDTO(
                         (Board)en[0], (Member)en[1], (Long)en[2]));
-        //목록 보기 요청 처리
-        //검색 적용 안됨
-//        Page<Object []> result =
-//                boardRepository.getBoardWithReplyCount(
-//                        pageRequestDTO.getPageable(
-//                                Sort.by("bno").descending()));
-        // 검색이 적용된 메서드 호출
-        Page<Object[]> result = boardRepository.searchPage(
-                pageRequestDTO.getType(),
-                pageRequestDTO.getKeyword(),
-                pageRequestDTO.getPageable(Sort.by("bno").descending())
-        );
+        //목록 보기 요청 처리 - 검색 적용 안됨
+        /*
+        Page<Object []> result =
+                boardRepository.getBoardWithReplyCount(
+                        pageRequestDTO.getPageable(
+                                Sort.by("bno").descending()));
+
+         */
+
+        //검색이 적용된 메서드 호출
+        Page<Object []> result =
+                boardRepository.searchPage(
+                        pageRequestDTO.getType(),
+                        pageRequestDTO.getKeyword(),
+                        pageRequestDTO.getPageable(
+                                Sort.by("bno").descending())
+                );
         return new PageResponseDTO<>(result, fn);
     }
 

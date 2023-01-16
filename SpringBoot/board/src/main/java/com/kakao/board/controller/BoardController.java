@@ -1,7 +1,7 @@
 package com.kakao.board.controller;
 
-import com.kakao.board.board.BoardDTO;
-import com.kakao.board.board.PageRequestDTO;
+import com.kakao.board.dto.BoardDTO;
+import com.kakao.board.dto.PageRequestDTO;
 import com.kakao.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -28,54 +28,66 @@ public class BoardController {
         return "board/list";
     }
 
-    // 게시물 등록 화면으로 이동하는 요청 - Forwarding
+    //게시물 등록 화면으로 이동하는 요청 - Forwarding
     @GetMapping("/board/register")
     public void register(Model model){
-        log.info("등록 화면 포워딩");
+        log.info("등록 화면으로 포워딩");
     }
 
-    // 게시물 등록 요청 - Redirect
+    //게시물을 등록하는 요청 - Redirect
     //RedirectAttributes - 1회용 세션
     @PostMapping("/board/register")
     public String register(BoardDTO dto, RedirectAttributes rattr){
         //파라미터 확인
-        log.info("dto: " + dto.toString());
+        log.info("dto:" + dto.toString());
         //데이터 삽입
         Long bno = boardService.register(dto);
-        rattr.addFlashAttribute("msg", bno+" 등록");
+        rattr.addFlashAttribute(
+                "msg", bno + " 등록");
         return "redirect:/board/list";
     }
-
-    // ModelAttribute 는 파라미터로 사용시 넘겨받은 데이터를
+    //ModelAttribute 는 파라미터로 사용하면 넘겨받은 데이터를
     //결과에 그대로 전달할 목적으로 사용
     @GetMapping({"/board/read", "/board/modify"})
     public void read(
-            @ModelAttribute("requestDTO") PageRequestDTO pageRequestDTO,  Long bno, Model model){
-        log.info("글 번호: " + bno);
+            @ModelAttribute("requestDTO") PageRequestDTO pageRequestDTO,
+            Long bno, Model model){
+        log.info("글 번호:" + bno);
         BoardDTO dto = boardService.get(bno);
         model.addAttribute("dto", dto);
     }
+
     @PostMapping("/board/modify")
-    public String modify(BoardDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO,
-                         RedirectAttributes redirectAttributes){
-        log.info("dto: " + dto.toString());
-        // 수정
+    public String modify(BoardDTO dto,
+      @ModelAttribute("requestDTO") PageRequestDTO requestDTO,
+      RedirectAttributes redirectAttributes){
+        log.info("dto:" + dto.toString());
+
+        //수정
         boardService.modify(dto);
-        // 상세보기로 이동할 때 글 번호 와 현재 페이지 번호 전달
-        redirectAttributes.addFlashAttribute("bno", dto.getBno());
-        redirectAttributes.addFlashAttribute("page", requestDTO.getPage());
-        return "redirect:/board/read?bno"+dto.getBno()+"&page="+requestDTO.getPage()
-                +"&type="+requestDTO.getType()
-                +"&keyword="+requestDTO.getKeyword();
+        //상세보기로 이동할 때 글 번호 와 현재 페이지 번호를 전달
+        redirectAttributes.addFlashAttribute(
+                "bno", dto.getBno());
+        redirectAttributes.addFlashAttribute(
+                "page", requestDTO.getPage());
+        log.info("수정 후 bno:" + dto.getBno());
+        return "redirect:/board/read?bno="+dto.getBno()
+                +"&page=" + requestDTO.getPage()
+                +"&type=" + requestDTO.getType()
+                +"&keyword=" + requestDTO.getKeyword();
     }
 
     @PostMapping("/board/remove")
-    public String remove(BoardDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO,
+    public String remove(BoardDTO dto,
                          RedirectAttributes redirectAttributes){
-        log.info("dto: " + dto.toString());
-        // 수정
+        log.info("dto:" + dto.toString());
+
+        //삭제
         boardService.removeWithReplies(dto.getBno());
-        redirectAttributes.addFlashAttribute("msg",dto.getBno()+"삭제");
+        redirectAttributes.addFlashAttribute("msg",
+                dto.getBno() + " 삭제");
         return "redirect:/board/list";
+
     }
+
 }

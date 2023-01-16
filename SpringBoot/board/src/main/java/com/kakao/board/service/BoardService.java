@@ -1,8 +1,8 @@
 package com.kakao.board.service;
 
-import com.kakao.board.board.BoardDTO;
-import com.kakao.board.board.PageRequestDTO;
-import com.kakao.board.board.PageResponseDTO;
+import com.kakao.board.dto.BoardDTO;
+import com.kakao.board.dto.PageRequestDTO;
+import com.kakao.board.dto.PageResponseDTO;
 import com.kakao.board.domain.Board;
 import com.kakao.board.domain.Member;
 

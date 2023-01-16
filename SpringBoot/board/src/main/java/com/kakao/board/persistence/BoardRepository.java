@@ -1,16 +1,17 @@
 package com.kakao.board.persistence;
 
 import com.kakao.board.domain.Board;
-import com.kakao.board.service.SearchBoardRepositoryImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface BoardRepository extends JpaRepository<Board, Long>, SearchBoardRepository {
+public interface BoardRepository extends JpaRepository<Board, Long>,
+SearchBoardRepository{
     //Board 데이터를 가져올 때 Writer 정보도 가져오는 메서드
     @Query("select b, w from Board b left join b.writer w where b.bno=:bno")
     public Object getBoardWithWriter(@Param("bno") Long bno);

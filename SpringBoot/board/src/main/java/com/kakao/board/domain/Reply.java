@@ -1,10 +1,7 @@
 package com.kakao.board.domain;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.*;
-
-import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Builder
@@ -21,5 +18,4 @@ public class Reply extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
-
 }
