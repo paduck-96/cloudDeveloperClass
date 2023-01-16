@@ -22,7 +22,7 @@ public class MovieImage {
     private String path; //하나의 디렉토리에 너무 많은 파일 저장되지 않도록
     //업로드 한 날짜 별로 파악되게 디렉토리 생성(~ 몇 만 개 정도)
 
-    private Movie movie;
+
 
     // 하나의 영화에 여러 개의 영화 이미지
     //데이터 불러올 떄 movie를 불러오지 않고 사용할 때 불러오게 설정
