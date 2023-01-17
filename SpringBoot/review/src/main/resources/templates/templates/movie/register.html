@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+    <th:block th:fragment="content">
+        <h1 class="mt-4">영화 등록</h1>
+        <form th:action="@{/movie/register}" th:method="post">
+            <div class="form-group">
+                <label>영화 제목</label>
+                <inputt type="text" class="form-control" name="title" placeholder="영화 제목 입력" />
+            </div>
+            <div class="form-group fileForm">
+                <label>영화 포스터 목록</label>
+                <input type="file" class="custom-file-input files" id="fileInput" multiple="multiple"/>
+                <label class="custom-file-label" data-browse="Browse">등록</label>
+            </div>
+        </form>
+
+        <script>
+            $(document).ready(function(e){
+                //제외할 확장자를 위한 정규식
+                //. 다음에 exe, sh, zip, alz, tiff로 끝날 경우
+                let regex = new RegExp("(.*?)\.(exe|sh|zip|alz|tiff)$");
+                let maxSize = 1024 * 1024 * 10;
+                // 파일 확장자 조사 함수
+                function checkExtension(fileName, fileSize){
+                    if(fileSize >= maxSize){
+                        alert("파일 크기 초과")
+                        return false;
+                    }
+                    return true;
+                }
+                // 파일의 선택이 변경되면
+                $(".custom-file-input").on("change", function(){
+                    //파일 이름 추출
+                    let fileName = $(this).val().split("\\").pop();
+                    //파일 이름 출력
+                    $(this).siblings(".custom-file-label").addClass("selected")
+                        .html(fileName);
+                    //파일 전송에 사용할 데이터
+                    let formdata = new FormData();
+                    //파일 목록 가져오기
+                    inputFile = $(this);
+                    files=inputFile[0].files;
+                    //추가 모드 설정
+                    appended = false;
+
+                    for(let i =0; i<files.length;i++){
+                        //파일 유효성 검사
+                        if(!checkExtension(files[i].name, files[i].size)){
+                            return false;
+                        }
+                        formdata.append("uploadFiles", files[i]);
+                    }
+                    // 유효성 통과에 실패한 경우 미업로드
+                    if(!appended){
+                        return;
+                    }
+                    // 파일 post 방식으로 전송
+                    $.ajax({
+                        url:'uploadajax',
+                        processData:false,
+                        contentType:false,
+                        data:formData,
+                        type:"POST",
+                        dataType:"json",
+                        success:function(result){
+                            console.log(result);
+                        },
+                        error:function(jqXHR, textstatus, errorThrown){
+                            console.log(textstatus)
+                        }
+                    })
+                })
+            })
+        </script>
+    </th:block>
+</th:block>
