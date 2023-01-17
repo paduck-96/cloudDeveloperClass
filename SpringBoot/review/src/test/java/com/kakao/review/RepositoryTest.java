@@ -8,6 +8,7 @@ import com.kakao.review.persistence.MemberRepository;
 import com.kakao.review.persistence.MovieImageRepository;
 import com.kakao.review.persistence.MovieRepository;
 import com.kakao.review.persistence.ReviewRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,9 +16,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
@@ -93,5 +96,39 @@ public class RepositoryTest {
         for(Object [] objects : result.getContent()) {
             System.out.println(Arrays.toString(objects));
         }
+    }
+
+    @Test
+    public void detailTest(){
+        List<Object []> list = movieRepository.getMovieWithAll(3L);
+        for(Object [] ar : list){
+            System.out.println(Arrays.toString(ar));
+        }
+    }
+
+    @Test
+    //@Transactional 로 지연 발생 오류 해결 가능
+    public void getReviews(){
+        Movie movie = Movie.builder().mno(96L).build();
+        List<Review> result = reviewRepository.findByMovie(movie);
+        result.forEach(review -> {
+            System.out.println(review);
+            //review.getReviewnum() 등 지연 생성 변수는 오류 발생
+            System.out.println((review.getReviewnum()));
+        });
+    }
+
+    @Test
+    @Transactional
+    public void deleteByMember(){
+        Member member = Member.builder().mid(89L).build();
+        reviewRepository.deleteByMember(member);
+    }
+
+    @Test
+    @Transactional
+    @Commit
+    public void updateByMember(){
+        reviewRepository.updatebyMember(58L);
     }
 }
