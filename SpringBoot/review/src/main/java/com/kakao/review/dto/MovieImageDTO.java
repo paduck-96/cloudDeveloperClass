@@ -17,10 +17,11 @@ public class MovieImageDTO {
     private String imgName;
     private String path;
 
-    // 실제 이미지 경로 리턴
+    //실제 이미지 경로를 리턴해주는 메서드
     public String getImageURL(){
         try{
-            return URLEncoder.encode(path+"/"+uuid+imgName, "UTF-8");
+            return URLEncoder.encode(
+                    path + "/" + uuid + imgName,"UTF-8");
         }catch(UnsupportedEncodingException e){
             System.out.println(e.getLocalizedMessage());
             e.printStackTrace();
@@ -28,13 +29,16 @@ public class MovieImageDTO {
         return "";
     }
 
+    //Thumbnail 이미지 경로를 리턴하는 메서드
     public String getThumbnailURL(){
         try{
-            return URLEncoder.encode(path+"/s_"+uuid+imgName, "UTF-8");
+            return URLEncoder.encode(
+                    path + "/s_" + uuid + imgName,"UTF-8");
         }catch(UnsupportedEncodingException e){
             System.out.println(e.getLocalizedMessage());
             e.printStackTrace();
         }
         return "";
     }
+
 }

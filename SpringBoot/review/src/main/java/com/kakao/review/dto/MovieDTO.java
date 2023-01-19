@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,18 @@ import java.util.List;
 public class MovieDTO {
     private Long mno;
     private String title;
-    // builder() 를 통해 생성시 기본으로 사용
+
+    //review의 grade 평균
+    private double avg;
+
+    //리뷰 개수
+    private Long reviewCnt;
+
+    //등록일 과 수정
+    private LocalDateTime regDate;
+    private LocalDateTime modDate;
+
+    //builder()라는 메서드를 이용해서 생성할 때 기본으로 사용
     @Builder.Default
     private List<MovieImageDTO> imageDTOList = new ArrayList<>();
 }
